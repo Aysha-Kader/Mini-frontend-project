@@ -1,11 +1,16 @@
-import React from 'react'
+import Navbar from "./components/Navbar";
+import { Routes, Route } from "react-router-dom";
+// import Home from "./pages/Home";
+// import About from "./pages/About";
+// import Recipie from "./pages/Recipie";
+// import UserDetail from "./pages/RecipieDetailsPage";
 
-const App=()=>{
-  return(
-    <div>Recipie</div>
-  )
+export default function App() {
+  return (
+    <div className="bg-gray-50 min-h-screen">
+      <Navbar />
+
+      
+    </div>
+  );
 }
-
-
-
-export default App;
