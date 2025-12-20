@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-// import About from "./pages/About";
+import About from "./pages/About";
 // import Recipie from "./pages/Recipie";
 // import UserDetail from "./pages/RecipieDetailsPage";
 
@@ -11,7 +11,8 @@ export default function App() {
       <Navbar />
 
        {/* <Routes> */}
-        <Home/>
+        {/* <Home/> */}
+        <About/>
        {/* </Routes> */}
       
     </div>
