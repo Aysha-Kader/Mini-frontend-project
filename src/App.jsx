@@ -8,13 +8,14 @@ import About from "./pages/About";
 export default function App() {
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Navbar />
+     <Navbar />
+    
+          <Routes>
+            
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+           </Routes>
 
-       {/* <Routes> */}
-        {/* <Home/> */}
-        <About/>
-       {/* </Routes> */}
-      
     </div>
   );
 }
