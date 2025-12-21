@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 const Home = () => {
 const navigate=useNavigate();
   return (
-    <div className=' lg:overflow-hidden '>
+    <div className=' lg:overflow-hidden bg-white'>
     <div className=' md:py-20 py-5  grid grid-cols-1 md:grid-cols-2   justify-center items-center gap-3'>
         <div className='flex flex-col justify-center items-center gap-8 text-center'>
             <div className='text-3xl md:text-6xl font-extrabold'>Adventure of <br></br><span className='text-yellow-400'>Delicacies</span></div>

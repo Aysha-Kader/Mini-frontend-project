@@ -16,7 +16,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-white shadow">
       <nav className="py-3 px-5 md:px-6 flex justify-between items-center">
 
-        {/* LOGO */}
+        {/* Logo */}
         <h1
           onClick={() => handleNavigate("/")}
           className="text-2xl font-extrabold cursor-pointer drop-shadow"
@@ -25,7 +25,7 @@ const Navbar = () => {
           <span className="text-yellow-500">oriz</span>
         </h1>
 
-        {/* MOBILE SEARCH + MENU ICON */}
+        {/* Mobile menu */}
         <div className="md:hidden flex items-center gap-3">
           <input
             type="text"
@@ -47,7 +47,7 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* DESKTOP NAV */}
+        {/* DESKTOP nav */}
         <ul className="hidden md:flex gap-8 text-gray-400 text-xl">
           <li
             onClick={() => handleNavigate("/")}
@@ -61,12 +61,13 @@ const Navbar = () => {
           >
             About
           </li>
-          <li className="cursor-pointer transform transition duration-300 hover:scale-105 hover:text-gray-600">
+          <li onClick={() => handleNavigate("/recipies")} className="cursor-pointer transform transition duration-300 hover:scale-105 hover:text-gray-600">
             Recipes
           </li>
         </ul>
 
-        {/* DESKTOP SEARCH */}
+        {/* searcg
+        h */}
         <div className="hidden lg:flex">
           <input
             type="text"
@@ -75,17 +76,17 @@ const Navbar = () => {
           />
         </div>
 
-        {/* LOGIN BUTTON */}
+        {/*login */}
         <button className="hidden md:block bg-orange-400 text-white px-4 py-2 rounded-lg transform transition duration-300 hover:bg-orange-600 hover:scale-105">
           Login
         </button>
       </nav>
 
-      {/* MOBILE MENU */}
+      {/*mobile */}
       {isOpen && (
         <div className="fixed inset-0 z-40 bg-white flex flex-col gap-8 p-8 pt-20">
 
-          {/* CLOSE BUTTON */}
+          {/*close button */}
           <IoClose
             size={30}
             className="absolute top-5 right-5 cursor-pointer"
