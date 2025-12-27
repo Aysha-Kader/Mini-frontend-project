@@ -22,12 +22,12 @@ const Footer = () => {
           <h3 className="text-lg font-semibold text-white mb-3">
             Quick Links
           </h3>
-          <ul className="space-y-2 text-sm">
+          {/* <ul className="space-y-2 text-sm">
             <li className="hover:text-yellow-400 cursor-pointer" onClick={navigate("/home")}>Home</li>
             <li className="hover:text-yellow-400 cursor-pointer" onClick={navigate("/recepies")}>Recipes</li>
             <li className="hover:text-yellow-400 cursor-pointer" onClick={navigate("/favourites")}>Favourites</li>
             <li className="hover:text-yellow-400 cursor-pointer" onClick={navigate("/add-recipe")}>Add Recipe</li>
-          </ul>
+          </ul> */}
         </div>
 
         {/* Social */}

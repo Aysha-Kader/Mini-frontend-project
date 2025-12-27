@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-/* =======================
-   FETCH ALL RECIPES
-======================= */
+
+
+
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
   async () => {
@@ -14,10 +14,7 @@ export const fetchRecipes = createAsyncThunk(
   }
 );
 
-/* =======================
-   FETCH RECIPE BY ID
-   (checks local first)
-======================= */
+
 export const fetchRecipeById = createAsyncThunk(
   "recipes/fetchRecipeById",
   async (id, { getState }) => {
@@ -35,9 +32,16 @@ export const fetchRecipeById = createAsyncThunk(
   }
 );
 
-/* =======================
-   SLICE
-======================= */
+const recipeMetadata={
+  "52772":{cookTime:25,difficulty:"Easy",diet:"Non-veg"},
+  "52884":{cookTime:25,difficulty:"Medium",diet:"veg"},
+
+
+  "52768":{cookTime:35,difficulty:"Easy",diet:"Non-veg"},
+  "52893":{cookTime:25,difficulty:"Hard",diet:"Non-veg"},
+  "52918":{cookTime:25,difficulty:"Hard",diet:"Non-veg"},
+}
+
 const recipeSlice = createSlice({
   name: "recipes",
   initialState: {
@@ -48,15 +52,15 @@ const recipeSlice = createSlice({
   },
 
   reducers: {
-    /* ADD RECIPE */
+   // add
     addRecipe: (state, action) => {
       state.recipes.unshift({
         ...action.payload,
-        isLocal: true, // 🔑 VERY IMPORTANT
+        isLocal: true, 
       });
     },
 
-    /* DELETE RECIPE */
+    // DELETE 
     deleteRecipie: (state, action) => {
       const id = action.payload;
 
@@ -87,7 +91,7 @@ const recipeSlice = createSlice({
 
   extraReducers: builder => {
     builder
-      /* FETCH ALL */
+     
       .addCase(fetchRecipes.pending, state => {
         state.loading = true;
       })
@@ -95,12 +99,17 @@ const recipeSlice = createSlice({
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
 
-        // ✅ keep ONLY user-added recipes
+       
         const localRecipes = state.recipes.filter(
           r => r.isLocal === true
         );
 
-        // ✅ replace API recipes (no duplicates)
+        const apiRecipes=(action.payload||[]).map(r=>({
+          ...r,
+          ...recipieMetadata[r.idMeal],
+        }));
+
+       
         state.recipes = [...localRecipes, ...action.payload];
       })
 
@@ -108,7 +117,7 @@ const recipeSlice = createSlice({
         state.loading = false;
       })
 
-      /* FETCH BY ID */
+     
       .addCase(fetchRecipeById.fulfilled, (state, action) => {
         state.selectedRecipe = action.payload;
       });
