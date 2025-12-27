@@ -11,6 +11,7 @@ const Recipes = () => {
   
 const navigate=useNavigate("");
   useEffect(() => {
+   
     dispatch(fetchRecipes());
   }, [dispatch]);
 
@@ -42,11 +43,11 @@ const navigate=useNavigate("");
       </div>
        <button
   onClick={() => navigate("/add-recipe")}
-  className="bg-green-500 text-white px-5 py-2 rounded-xl mb-6"
+  className="bg-green-500 text-white px-5 py-2 rounded-xl mb-6 hover:bg-green-800 hover:scale-105 cursor-pointer"
 >
-  ➕ Add New Recipe
+  Add New Recipe
 </button>
-      {/*  */}
+     
       {loading ? (
         <p className="text-center text-gray-500">Loading recipes...</p>
       ) : (

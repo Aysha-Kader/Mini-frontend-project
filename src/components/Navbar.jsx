@@ -66,7 +66,7 @@ const Navbar = () => {
           </li>
 
           <li
-            onClick={() => handleNavigate(" /Favourites")}
+            onClick={() => handleNavigate("/favourites")}
             className="cursor-pointer transform transition duration-300 hover:scale-105 hover:text-gray-600"
           >
            Favourites
@@ -118,7 +118,7 @@ const Navbar = () => {
            onClick={() => handleNavigate("/recipies")}
             className="list-none font-bold text-lg text-gray-400 cursor-pointer transform transition hover:scale-105 hover:text-gray-600"
           >
-            Recipes
+            Recipies
           </li>
 
            <li

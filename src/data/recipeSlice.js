@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-
+/* =======================
+   FETCH ALL RECIPES
+======================= */
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
   async () => {
@@ -8,27 +10,34 @@ export const fetchRecipes = createAsyncThunk(
       "https://www.themealdb.com/api/json/v1/1/search.php?s="
     );
     const data = await res.json();
-    return data.meals;
+    return data.meals || [];
   }
 );
 
-
+/* =======================
+   FETCH RECIPE BY ID
+   (checks local first)
+======================= */
 export const fetchRecipeById = createAsyncThunk(
   "recipes/fetchRecipeById",
   async (id, { getState }) => {
-    const local = getState().recipes.recipes.find(
+    const localRecipe = getState().recipes.recipes.find(
       r => r.idMeal === id
     );
-    if (local) return local;
+
+    if (localRecipe) return localRecipe;
 
     const res = await fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
     );
     const data = await res.json();
-    return data.meals[0];
+    return data.meals ? data.meals[0] : null;
   }
 );
 
+/* =======================
+   SLICE
+======================= */
 const recipeSlice = createSlice({
   name: "recipes",
   initialState: {
@@ -37,58 +46,79 @@ const recipeSlice = createSlice({
     favorites: [],
     loading: false,
   },
+
   reducers: {
+    /* ADD RECIPE */
     addRecipe: (state, action) => {
-      state.recipes.unshift(action.payload);
+      state.recipes.unshift({
+        ...action.payload,
+        isLocal: true, // 🔑 VERY IMPORTANT
+      });
     },
-    deleteRecipie:(state,action)=>{
-      const id=action.payload;
 
-      state.recipes=state.recipes.filter(recipe=>recipe.idMeal !==id);
-      state.favorites=state.favorites.filter(favId =>favId != id);
+    /* DELETE RECIPE */
+    deleteRecipie: (state, action) => {
+      const id = action.payload;
 
-      if(state.selectedRecipe?.idMeal ===id){
-        state.selectedRecipe =null;
+      state.recipes = state.recipes.filter(
+        recipe => recipe.idMeal !== id
+      );
+
+      state.favorites = state.favorites.filter(
+        favId => favId !== id
+      );
+
+      if (state.selectedRecipe?.idMeal === id) {
+        state.selectedRecipe = null;
       }
-
     },
+
+    /* TOGGLE FAVORITE */
     toggleFavorite: (state, action) => {
       const id = action.payload;
-      state.favorites.includes(id)
-        ? (state.favorites = state.favorites.filter(f => f !== id))
-        : state.favorites.push(id);
+
+      if (state.favorites.includes(id)) {
+        state.favorites = state.favorites.filter(f => f !== id);
+      } else {
+        state.favorites.push(id);
+      }
     },
   },
+
   extraReducers: builder => {
     builder
+      /* FETCH ALL */
       .addCase(fetchRecipes.pending, state => {
         state.loading = true;
       })
+
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-      state.loading = false;
+        state.loading = false;
 
-      
-      const existingRecipes = state.recipes || [];
+        // ✅ keep ONLY user-added recipes
+        const localRecipes = state.recipes.filter(
+          r => r.isLocal === true
+        );
 
-     
-      const localRecipes = existingRecipes.filter(
-        (r) => typeof r.idMeal === "string"
-      );
+        // ✅ replace API recipes (no duplicates)
+        state.recipes = [...localRecipes, ...action.payload];
+      })
 
-      const apiRecipes = action.payload || [];
+      .addCase(fetchRecipes.rejected, state => {
+        state.loading = false;
+      })
 
-     
-      state.recipes = [...localRecipes, ...apiRecipes];
-    })
-
-    .addCase(fetchRecipes.rejected, (state) => {
-      state.loading = false;
-    })
+      /* FETCH BY ID */
       .addCase(fetchRecipeById.fulfilled, (state, action) => {
         state.selectedRecipe = action.payload;
       });
   },
 });
 
-export const { addRecipe, toggleFavorite,deleteRecipie } = recipeSlice.actions;
+export const {
+  addRecipe,
+  deleteRecipie,
+  toggleFavorite,
+} = recipeSlice.actions;
+
 export default recipeSlice.reducer;

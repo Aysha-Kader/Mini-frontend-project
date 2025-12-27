@@ -6,6 +6,7 @@ import Recipie from "./pages/Recipie";
 import RecipieDetailsPage from "./pages/RecipieDetailsPage";
 import AddRecipe from "./pages/AddRecipe";
 import Favourites from './pages/Favourites';
+import Footer from "./components/Footer"
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/favourites" element={<Favourites />} />
             
            </Routes>
+           <Footer />
 
     </div>
   );

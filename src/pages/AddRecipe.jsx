@@ -26,6 +26,7 @@ const AddRecipe = () => {
 
     const newRecipe = {
       idMeal: Date.now().toString(),
+      isLocal:true,
       strMeal: recipe.name,
       strMealThumb: recipe.image,
       strArea: recipe.area,
@@ -91,7 +92,7 @@ const AddRecipe = () => {
         <button
           className="w-full bg-orange-400 text-white py-3 rounded-xl hover:bg-orange-500 transition"
         >
-          Add Recipe
+          Add Recipie
         </button>
       </form>
     </div>

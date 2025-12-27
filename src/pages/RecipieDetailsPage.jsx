@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchRecipeById } from "../data/recipeSlice";
+
+
 import { deleteRecipie } from "../data/recipeSlice";
+
 import {useNavigate} from "react-router-dom";
 
 const RecipeDetails = () => {
@@ -59,16 +62,22 @@ const RecipeDetails = () => {
         <div className="flex flex-wrap gap-4">
           <button
             onClick={() => setTimer(timer + 5)}
-            className="bg-orange-400 text-white px-4 py-2 rounded-lg hover:bg-orange-500 transition"
+            className="bg-orange-400 text-white px-4 py-2 rounded-lg hover:bg-orange-500 transition  hover:scale-105 cursor-pointer"
           >
             ⏱ Add 5 mins
           </button>
 
           <button
             onClick={() => window.print()}
-            className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition"
+            className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition  hover:scale-105 cursor-pointer"
           >
             🖨 Print Recipe
+          </button>
+          <button
+            onClick={() => navigate("/recipies")}
+            className="bg-yellow-400 text-white px-4 py-2 rounded-lg hover:bg-yellow-900 transition  hover:scale-105 cursor-pointer"
+          >
+            Back to  Recipe
           </button>
 
           {recipe.isLocal && (
@@ -79,12 +88,12 @@ const RecipeDetails = () => {
 
               if (confirmDelete){
                 dispatch(deleteRecipie (recipe.idMeal));
-                navigate("/recipes");
+                navigate("/recipies");
               }
 
               }
             }
-          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Delete Recipie</button>
+          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition  hover:scale-105 cursor-pointer">Delete Recipie</button>
          
           )}
         </div>
