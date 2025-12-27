@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRecipes } from "../data/recipeSlice";
 import RecipeCard from "../components/RecipieCard";
+import {useNavigate} from "react-router-dom"
 
 const Recipes = () => {
   const dispatch = useDispatch();
   const { recipes, loading } = useSelector(state => state.recipes);
   const [search, setSearch] = useState("");
-
+  
+const navigate=useNavigate("");
   useEffect(() => {
     dispatch(fetchRecipes());
   }, [dispatch]);
@@ -38,7 +40,12 @@ const Recipes = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
-
+       <button
+  onClick={() => navigate("/add-recipe")}
+  className="bg-green-500 text-white px-5 py-2 rounded-xl mb-6"
+>
+  ➕ Add New Recipe
+</button>
       {/*  */}
       {loading ? (
         <p className="text-center text-gray-500">Loading recipes...</p>

@@ -64,6 +64,13 @@ const Navbar = () => {
           <li onClick={() => handleNavigate("/recipies")} className="cursor-pointer transform transition duration-300 hover:scale-105 hover:text-gray-600">
             Recipes
           </li>
+
+          <li
+            onClick={() => handleNavigate(" /Favourites")}
+            className="cursor-pointer transform transition duration-300 hover:scale-105 hover:text-gray-600"
+          >
+           Favourites
+          </li>
         </ul>
 
         {/* searcg
@@ -108,10 +115,17 @@ const Navbar = () => {
           </li>
 
           <li
-            onClick={() => setIsOpen(false)}
+           onClick={() => handleNavigate("/recipies")}
             className="list-none font-bold text-lg text-gray-400 cursor-pointer transform transition hover:scale-105 hover:text-gray-600"
           >
             Recipes
+          </li>
+
+           <li
+            onClick={() => handleNavigate("/favourites")}
+            className="list-none font-bold text-lg text-gray-400 cursor-pointer transform transition hover:scale-105 hover:text-gray-600"
+          >
+           Favourites
           </li>
 
           <button
