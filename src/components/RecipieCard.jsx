@@ -35,7 +35,7 @@ const RecipeCard = ({ recipe }) => {
         <div className="flex justify-between items-center pt-2">
           <button
             onClick={() => navigate(`/recipes/${recipe.idMeal}`)}
-            className="bg-orange-400 text-white px-3 py-1 rounded-lg hover:bg-orange-500 transition"
+            className="bg-orange-400 text-white px-3 py-1 rounded-lg hover:bg-orange-500 transition cursor-pointer"
           >
             View Recipe
           </button>

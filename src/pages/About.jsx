@@ -1,4 +1,5 @@
 import React from 'react'
+import ChefSection from "../components/ChefSection";
 
 const About = () => {
   return (
@@ -45,26 +46,26 @@ const About = () => {
         <div className='grid grid-cols-1 md:grid-cols-4 gap-4 py-7 '>
           
          <div className='pt-2'>
-            <div className='bg-orange-400 text-white text-3xl  text-center rounded-lg py-20 shadow-lg hover:scale-75 cursor-pointer'>
+            <div className='bg-orange-400 text-white text-3xl  text-center rounded-lg py-20 shadow-lg hover:scale-105 cursor-pointer'>
               "Flavoriz has always helped my cooking"
           </div>
           </div>
 
           <div className='pt-5 '>
-            <div className=' text-orange-400 text-3xl  text-center rounded-lg py-20 shadow-lg hover:scale-75 cursor-pointer'>
+            <div className=' text-orange-400 text-3xl  text-center rounded-lg py-20 shadow-lg hover:scale-105 cursor-pointer'>
               "Cooking has never been this dope!!"
           </div>
           </div>
 
 
           <div className='pt-8'>
-             <div className='bg-orange-400 text-white text-3xl  text-center rounded-lg py-20 shadow-lg hover:scale-75 cursor-pointer'>
+             <div className='bg-orange-400 text-white text-3xl  text-center rounded-lg py-20 shadow-lg hover:scale-105 cursor-pointer'>
               "Cooking has never been this easy!!"
           </div>
           </div>
 
            <div >
-            <div className=' text-orange-400 text-3xl  text-center rounded-lg py-20 shadow-lg hover:scale-75 cursor-pointer'>
+            <div className=' text-orange-400 text-3xl  text-center rounded-lg py-20 shadow-lg hover:scale-105 cursor-pointer'>
               "Flavoriz has always sparked my culinary game"
           </div>
           </div>
@@ -72,6 +73,9 @@ const About = () => {
         
     </div>
      </div>
+     <div className="min-h-screen bg-gradient-to-r from-gray-100 to-yellow-100 py-10">
+      <ChefSection />
+    </div>
      </div>
   )
 }

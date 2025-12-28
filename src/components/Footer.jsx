@@ -22,12 +22,12 @@ const Footer = () => {
           <h3 className="text-lg font-semibold text-white mb-3">
             Quick Links
           </h3>
-          {/* <ul className="space-y-2 text-sm">
-            <li className="hover:text-yellow-400 cursor-pointer" onClick={navigate("/home")}>Home</li>
-            <li className="hover:text-yellow-400 cursor-pointer" onClick={navigate("/recepies")}>Recipes</li>
-            <li className="hover:text-yellow-400 cursor-pointer" onClick={navigate("/favourites")}>Favourites</li>
-            <li className="hover:text-yellow-400 cursor-pointer" onClick={navigate("/add-recipe")}>Add Recipe</li>
-          </ul> */}
+          <ul className="space-y-2 text-sm">
+            <li className="hover:text-yellow-400 cursor-pointer"  onClick={() => navigate("/")}>Home</li>
+            <li className="hover:text-yellow-400 cursor-pointer"  onClick={() => navigate("/recipies")}>Recipes</li>
+            <li className="hover:text-yellow-400 cursor-pointer"  onClick={() => navigate("/favourites")}>Favourites</li>
+            <li className="hover:text-yellow-400 cursor-pointer"  onClick={() => navigate("/add-recipe")}>Add Recipe</li>
+          </ul>
         </div>
 
         {/* Social */}
@@ -46,7 +46,7 @@ const Footer = () => {
       {/* Bottom bar */}
       <div className="border-t border-gray-700 text-center py-4 text-sm">
         <p>
-          © {new Date().getFullYear()} Recipe Hub. Made with{" "}
+          © {new Date().getFullYear()}  Flavoriz. Made with{" "}
           <FaHeart className="inline text-red-500" /> by You
         </p>
       </div>

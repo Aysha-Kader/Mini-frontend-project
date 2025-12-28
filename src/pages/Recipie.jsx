@@ -19,10 +19,30 @@ const Recipes = () => {
   useEffect(() => {
     if (recipes.length === 0) dispatch(fetchRecipes());
   }, [dispatch, recipes.length]);
+  const getIngredientsText = (recipe) => {
+  let ingredients = [];
+
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = recipe[`strIngredient${i}`];
+    if (ingredient && ingredient.trim() !== "") {
+      ingredients.push(ingredient.toLowerCase());
+    }
+  }
+
+  return ingredients.join(" ");
+};
+
 
   const filteredRecipes = recipes
-    ?.filter(r => r.strMeal.toLowerCase().includes(search.toLowerCase()))
-    .filter(r => cuisine === "All" || r.strArea === cuisine || r.area === cuisine)
+    ?.filter(r => {
+  const searchText = search.toLowerCase();
+
+  const mealMatch = r.strMeal?.toLowerCase().includes(searchText);
+  const ingredientMatch = getIngredientsText(r).includes(searchText);
+
+  return mealMatch || ingredientMatch;
+})
+  .filter(r => cuisine === "All" || r.strArea === cuisine || r.area === cuisine)
     .filter(r => {
       if (time === "All") return true;
       return r.cookTime ? r.cookTime <= Number(time) : true;
@@ -44,7 +64,7 @@ const Recipes = () => {
 
       {/* Search */}
       <div className="flex flex-col justify-center mb-6 gap-4 flex-wrap">
-        <div className="flex justify-center">
+        <div className="flex justify-center text-center">
           
        
         <input
@@ -55,7 +75,7 @@ const Recipes = () => {
         />
  </div>
         {/* Cuisine Filter */}
-        <div className="flex  justify-between">
+        <div className="grid grid-cols-2 md:grid-cols-4  justify-between text-center ">
         <select className="p-2 rounded-lg" value={cuisine} onChange={e => setCuisine(e.target.value)}>
           <option>All</option>
           <option>Indian</option>
