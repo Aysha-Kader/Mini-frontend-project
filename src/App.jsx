@@ -7,6 +7,7 @@ import RecipieDetailsPage from "./pages/RecipieDetailsPage";
 import AddRecipe from "./pages/AddRecipe";
 import Favourites from './pages/Favourites';
 import Footer from "./components/Footer"
+import Login from "./pages/Login"
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="/recipes/:id" element={<RecipieDetailsPage/>}/>
             <Route path="/add-recipe" element={<AddRecipe />} />
             <Route path="/favourites" element={<Favourites />} />
+            <Route path="/login" element={<Login/>}/>
             
            </Routes>
            <Footer />

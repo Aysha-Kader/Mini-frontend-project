@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
+import {useDispatch,useSelector} from "react-redux";
+import {logout} from "../data/authSlice";
 
 const Navbar = () => {
+  const dispatch=useDispatch();
+  const {isLoggedIn,user}=
+    useSelector(state=>state.auth);
+
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -84,9 +90,27 @@ const Navbar = () => {
         </div>
 
         {/*login */}
-        <button className="hidden md:block bg-orange-400 text-white px-4 py-2 rounded-lg transform transition duration-300 hover:bg-orange-600 hover:scale-105">
-          Login
-        </button>
+       {isLoggedIn ? (
+  <div className="hidden md:flex items-center gap-3">
+    <span className="text-sm text-gray-500">
+      {user?.email}
+    </span>
+    <button
+      onClick={() => dispatch(logout())}
+      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+    >
+      Logout
+    </button>
+  </div>
+) : (
+  <button
+    onClick={() => navigate("/login")}
+    className="hidden md:block bg-orange-400 text-white px-4 py-2 rounded-lg hover:bg-orange-600"
+  >
+    Login
+  </button>
+)}
+
       </nav>
 
       {/*mobile */}
@@ -128,12 +152,28 @@ const Navbar = () => {
            Favourites
           </li>
 
-          <button
-            onClick={() => setIsOpen(false)}
-            className="bg-orange-400 rounded-lg p-2 text-white transform transition hover:bg-orange-600 hover:scale-105 cursor-pointer"
-          >
-            Login
-          </button>
+         <button
+  onClick={() => {
+    setIsOpen(false);
+    navigate("/login");
+  }}
+  className="bg-orange-400 rounded-lg p-2 text-white hover:bg-orange-600"
+>
+  Login
+</button>
+{isLoggedIn && (
+  <button
+    onClick={() => {
+      dispatch(logout());
+      setIsOpen(false);
+    }}
+    className="bg-red-500 rounded-lg p-2 text-white hover:bg-red-600"
+  >
+    Logout
+  </button>
+)}
+
+
         </div>
       )}
     </header>

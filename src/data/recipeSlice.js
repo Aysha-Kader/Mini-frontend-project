@@ -32,14 +32,14 @@ export const fetchRecipeById = createAsyncThunk(
   }
 );
 
-const recipeMetadata={
-  "52772":{cookTime:25,difficulty:"Easy",diet:"Non-veg"},
-  "52884":{cookTime:25,difficulty:"Medium",diet:"veg"},
+const recipieMetadata={
+  "53322":{cookTime:10,difficulty:"Easy",diet:"Non-veg"},
+  "53324":{cookTime:10,difficulty:"Medium",diet:"Veg"},
 
 
-  "52768":{cookTime:35,difficulty:"Easy",diet:"Non-veg"},
-  "52893":{cookTime:25,difficulty:"Hard",diet:"Non-veg"},
-  "52918":{cookTime:25,difficulty:"Hard",diet:"Non-veg"},
+  "53245":{cookTime:35,difficulty:"Easy",diet:"Non-veg"},
+  "53265":{cookTime:25,difficulty:"Hard",diet:"Non-veg"},
+  "52918":{cookTime:45,difficulty:"Hard",diet:"Non-veg"},
 }
 
 const recipeSlice = createSlice({

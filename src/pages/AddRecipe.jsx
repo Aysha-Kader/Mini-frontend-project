@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { addRecipe } from "../data/recipeSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const AddRecipe = () => {
+const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
+ 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+   if (!isLoggedIn) {
+   return<Navigate to="/login" replace/>;
+  }
+
+
 
   const [recipe, setRecipe] = useState({
     name: "",
