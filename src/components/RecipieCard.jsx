@@ -12,18 +12,18 @@ const RecipeCard = ({ recipe }) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:scale-105 overflow-hidden">
-      
+      {/* recipie image */}
       <img
         src={recipe.strMealThumb}
         alt={recipe.strMeal}
         className="w-full h-44 object-cover"
       />
-
+      {/* recipiename */}
       <div className="p-4 space-y-2">
         <h3 className="font-bold text-lg text-gray-800">
           {recipe.strMeal}
         </h3>
-
+        {/* features */}
         <div className="flex items-center gap-1 text-yellow-400 text-sm">
           <FaStar /> 4.5
         </div>
@@ -42,9 +42,8 @@ const RecipeCard = ({ recipe }) => {
 
           <FaHeart
             onClick={() => dispatch(toggleFavorite(recipe.idMeal))}
-            className={`text-xl cursor-pointer transition ${
-              isFav ? "text-red-500" : "text-gray-300 hover:text-red-400"
-            }`}
+            className={`text-xl cursor-pointer transition ${isFav ? "text-red-500" : "text-gray-300 hover:text-red-400"
+              }`}
           />
         </div>
       </div>

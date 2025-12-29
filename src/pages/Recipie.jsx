@@ -5,89 +5,123 @@ import RecipeCard from "../components/RecipieCard";
 import { useNavigate } from "react-router-dom";
 
 const Recipes = () => {
+
+  // Redux dispatch function
   const dispatch = useDispatch();
+
+  //  page navigation
   const navigate = useNavigate();
 
+  // Get recipes data and loading state from Redux 
   const { recipes, loading } = useSelector(state => state.recipes);
 
+  //  search input state
   const [search, setSearch] = useState("");
+
+  // Filter states
   const [cuisine, setCuisine] = useState("All");
   const [time, setTime] = useState("All");
   const [difficulty, setDifficulty] = useState("All");
   const [diet, setDiet] = useState("All");
 
+  // Fetch recipes when loads (once)
   useEffect(() => {
-    if (recipes.length === 0) dispatch(fetchRecipes());
-  }, [dispatch, recipes.length]);
-  const getIngredientsText = (recipe) => {
-  let ingredients = [];
-
-  for (let i = 1; i <= 20; i++) {
-    const ingredient = recipe[`strIngredient${i}`];
-    if (ingredient && ingredient.trim() !== "") {
-      ingredients.push(ingredient.toLowerCase());
+    if (recipes.length === 0) {
+      dispatch(fetchRecipes());
     }
-  }
+  }, [dispatch, recipes.length]);
 
-  return ingredients.join(" ");
-};
+
+  // Used for searching by ingredient
+  const getIngredientsText = (recipe) => {
+    let ingredients = [];
+
+
+    for (let i = 1; i <= 20; i++) {
+      const ingredient = recipe[`strIngredient${i}`];
+
+
+      if (ingredient && ingredient.trim() !== "") {
+        ingredients.push(ingredient.toLowerCase());
+      }
+    }
+
+    // Convert ingredients array to string
+    return ingredients.join(" ");
+  };
 
 
   const filteredRecipes = recipes
+    // Search filter 
     ?.filter(r => {
-  const searchText = search.toLowerCase();
+      const searchText = search.toLowerCase();
 
-  const mealMatch = r.strMeal?.toLowerCase().includes(searchText);
-  const ingredientMatch = getIngredientsText(r).includes(searchText);
+      const mealMatch = r.strMeal?.toLowerCase().includes(searchText);
+      const ingredientMatch = getIngredientsText(r).includes(searchText);
 
-  return mealMatch || ingredientMatch;
-})
-  .filter(r => cuisine === "All" || r.strArea === cuisine || r.area === cuisine)
+      return mealMatch || ingredientMatch;
+    })
+
+    // Cuisine filter
+    .filter(
+      r => cuisine === "All" || r.strArea === cuisine || r.area === cuisine
+    )
+
+    // Cook time filter
     .filter(r => {
       if (time === "All") return true;
       return r.cookTime ? r.cookTime <= Number(time) : true;
     })
-    .filter(r => difficulty === "All" || r.difficulty === difficulty)
-    .filter(r => diet === "All" || r.diet === diet);
 
-  return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-100 to-yellow-100 px-4 md:px-8 py-8">
-      {/* Title */}
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-5xl font-extrabold">
-          Discover <span className="text-yellow-400">Recipes</span>
-        </h1>
-        <p className="text-gray-500 mt-2">
-          Explore delicious recipes from our foodie community
-        </p>
-      </div>
+    // Difficulty filter
+    .filter(
+      r => difficulty === "All" || r.difficulty === difficulty
+    )
 
-      {/* Search */}
-      <div className="flex flex-col justify-center mb-6 gap-4 flex-wrap">
-        <div className="flex justify-center text-center">
-          
-       
+    // Diet filter
+    .filter(
+      r => diet === "All" || r.diet === diet
+    );
+
+
+return (
+  <div className="min-h-screen bg-gradient-to-r from-gray-100 to-yellow-100 px-4 md:px-8 py-8">
+    {/* Title */}
+    <div className="text-center mb-8">
+      <h1 className="text-3xl md:text-5xl font-extrabold">
+        Discover <span className="text-yellow-400">Recipes</span>
+      </h1>
+      <p className="text-gray-500 mt-2">
+        Explore delicious recipes from our foodie community
+      </p>
+    </div>
+
+    {/* Search */}
+    <div className="flex flex-col justify-center mb-6 gap-4 flex-wrap">
+      <div className="flex justify-center text-center">
+
+
         <input
           type="text"
           placeholder="Search your favourite recipe..."
           className="w-full md:w-1/2 p-3 rounded-xl bg-white shadow focus:outline-none justify-center"
           onChange={(e) => setSearch(e.target.value)}
         />
- </div>
-        {/* Cuisine Filter */}
-        <div className="grid grid-cols-2 md:grid-cols-4  justify-between text-center ">
+      </div>
+      {/* Cuisine Filter */}
+      <div className="grid grid-cols-2 md:grid-cols-4  justify-between text-center ">
         <select className="p-2 rounded-lg" value={cuisine} onChange={e => setCuisine(e.target.value)}>
           <option>All</option>
           <option>Indian</option>
           <option>Italian</option>
           <option>American</option>
-            <option>Turkish</option>
-              <option>Saudi Arabian</option>
-                <option>Japanese</option>
-                  <option>Ukrainian</option>
-                    <option>Croatian</option>
-                    <option>Spanish</option>
-                      <option>American</option>
+          <option>Turkish</option>
+          <option>Saudi Arabian</option>
+          <option>Japanese</option>
+          <option>Ukrainian</option>
+          <option>Croatian</option>
+          <option>Spanish</option>
+          <option>American</option>
 
         </select>
 
@@ -114,31 +148,31 @@ const Recipes = () => {
           <option>Non-Veg</option>
           <option>Vegan</option>
         </select>
-        </div>
       </div>
-
-      {/* Add Recipe Button */}
-      <div className="flex justify-center mb-6">
-        <button
-          onClick={() => navigate("/add-recipe")}
-          className="bg-green-500 text-white px-5 py-2 rounded-xl hover:bg-green-800 hover:scale-105 cursor-pointer"
-        >
-          Add New Recipe
-        </button>
-      </div>
-
-      {/* Recipes Grid */}
-      {loading ? (
-        <p className="text-center text-gray-500">Loading recipes...</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredRecipes?.map(recipe => (
-            <RecipeCard key={recipe.idMeal || recipe.id} recipe={recipe} />
-          ))}
-        </div>
-      )}
     </div>
-  );
+
+    {/* Add Recipe Button */}
+    <div className="flex justify-center mb-6">
+      <button
+        onClick={() => navigate("/add-recipe")}
+        className="bg-green-500 text-white px-5 py-2 rounded-xl hover:bg-green-800 hover:scale-105 cursor-pointer"
+      >
+        Add New Recipe
+      </button>
+    </div>
+
+    {/* Recipes Grid */}
+    {loading ? (
+      <p className="text-center text-gray-500">Loading recipes...</p>
+    ) : (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {filteredRecipes?.map(recipe => (
+          <RecipeCard key={recipe.idMeal || recipe.id} recipe={recipe} />
+        ))}
+      </div>
+    )}
+  </div>
+);
 };
 
 export default Recipes;

@@ -1,4 +1,4 @@
-import {  FaStar, FaUtensils  } from "react-icons/fa";
+import { FaStar, FaUtensils } from "react-icons/fa";
 
 
 const ChefSection = () => {
@@ -7,7 +7,7 @@ const ChefSection = () => {
       {/* Header */}
       <div className="text-center mb-10">
         <div className="flex justify-center mb-4">
-        👨‍🍳
+          👨‍🍳
         </div>
         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800">
           Meet Our <span className="text-yellow-500">Chef</span>
@@ -41,7 +41,7 @@ const ChefSection = () => {
             reaching your kitchen.
           </p>
 
-          {/* Stats */}
+          {/* Status */}
           <div className="grid grid-cols-3 gap-4 text-center">
             <div className="bg-yellow-50 rounded-xl p-4">
               <FaUtensils className="mx-auto text-yellow-500 mb-1" />
@@ -56,7 +56,7 @@ const ChefSection = () => {
             </div>
 
             <div className="bg-yellow-50 rounded-xl p-4">
-                👨‍🍳
+              👨‍🍳
               <p className="text-xl font-bold text-gray-800">8+</p>
               <p className="text-sm text-gray-500">Years</p>
             </div>

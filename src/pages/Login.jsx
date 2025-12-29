@@ -4,28 +4,38 @@ import { login } from "../data/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  // Redux dispatch function
   const dispatch = useDispatch();
+
+  //  navigate between pages
   const navigate = useNavigate();
 
+  // State to store email input value
   const [email, setEmail] = useState("");
+
+  // State to store password input value
   const [password, setPassword] = useState("");
 
+  // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent page reload on submit
 
-    // DUMMY LOGIN
+    // Dispatch login action with email
     dispatch(login({ email }));
+
+    // navigate user to home page after login
     navigate("/");
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-yellow-100 to-gray-100">
+      {/* form */}
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm space-y-4"
       >
         <h2 className="text-2xl font-bold text-center">Login 🍽️</h2>
-
+        {/* email */}
         <input
           type="email"
           placeholder="Email"
@@ -34,7 +44,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-
+        {/* password */}
         <input
           type="password"
           placeholder="Password"

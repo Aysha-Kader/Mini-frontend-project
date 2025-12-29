@@ -2,7 +2,7 @@ import { FaFacebook, FaInstagram, FaTwitter, FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
-    const navigate=useNavigate();
+  const navigate = useNavigate();
   return (
     <footer className="bg-gray-900 text-gray-300 mt-10">
       <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -23,10 +23,10 @@ const Footer = () => {
             Quick Links
           </h3>
           <ul className="space-y-2 text-sm">
-            <li className="hover:text-yellow-400 cursor-pointer"  onClick={() => navigate("/")}>Home</li>
-            <li className="hover:text-yellow-400 cursor-pointer"  onClick={() => navigate("/recipies")}>Recipes</li>
-            <li className="hover:text-yellow-400 cursor-pointer"  onClick={() => navigate("/favourites")}>Favourites</li>
-            <li className="hover:text-yellow-400 cursor-pointer"  onClick={() => navigate("/add-recipe")}>Add Recipe</li>
+            <li className="hover:text-yellow-400 cursor-pointer" onClick={() => navigate("/")}>Home</li>
+            <li className="hover:text-yellow-400 cursor-pointer" onClick={() => navigate("/recipies")}>Recipes</li>
+            <li className="hover:text-yellow-400 cursor-pointer" onClick={() => navigate("/favourites")}>Favourites</li>
+            <li className="hover:text-yellow-400 cursor-pointer" onClick={() => navigate("/add-recipe")}>Add Recipe</li>
           </ul>
         </div>
 

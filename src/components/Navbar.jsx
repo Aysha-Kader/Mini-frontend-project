@@ -1,4 +1,4 @@
-      import React, { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; // <-- import useLocation
 import { HiMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
@@ -58,9 +58,8 @@ const Navbar = () => {
             <li
               key={item.path}
               onClick={() => handleNavigate(item.path)}
-              className={`cursor-pointer transform transition duration-300 hover:scale-105 hover:text-gray-600 ${
-                isActive(item.path) ? "border-b-2 border-yellow-500 text-gray-800" : ""
-              }`}
+              className={`cursor-pointer transform transition duration-300 hover:scale-105 hover:text-gray-600 ${isActive(item.path) ? "border-b-2 border-yellow-500 text-gray-800" : ""
+                }`}
             >
               {item.name}
             </li>
@@ -102,9 +101,8 @@ const Navbar = () => {
             <li
               key={item.path}
               onClick={() => handleNavigate(item.path)}
-              className={`list-none font-bold text-lg cursor-pointer transform transition hover:scale-105 ${
-                isActive(item.path) ? "border-b-2 border-yellow-500 text-gray-800" : "text-gray-400 hover:text-gray-600"
-              }`}
+              className={`list-none font-bold text-lg cursor-pointer transform transition hover:scale-105 ${isActive(item.path) ? "border-b-2 border-yellow-500 text-gray-800" : "text-gray-400 hover:text-gray-600"
+                }`}
             >
               {item.name}
             </li>

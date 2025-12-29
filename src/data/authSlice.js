@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+// authslice
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
     user: null,
   },
-
+  // reducers
   reducers: {
     login: (state, action) => {
       state.isLoggedIn = true;
