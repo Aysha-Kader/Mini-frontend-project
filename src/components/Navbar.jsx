@@ -10,7 +10,7 @@ const Navbar = () => {
   const { isLoggedIn, user } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation(); // <-- get current path
+  const location = useLocation(); 
 
   const handleNavigate = (path) => {
     navigate(path);
@@ -35,11 +35,7 @@ const Navbar = () => {
 
         {/* Mobile menu */}
         <div className="md:hidden flex items-center gap-3">
-          <input
-            type="text"
-            className="rounded-lg bg-gray-200 text-gray-500 p-2 outline-none"
-            placeholder="Search your dishes..."
-          />
+         
           {isOpen ? (
             <IoClose size={30} className="cursor-pointer" onClick={() => setIsOpen(false)} />
           ) : (

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchRecipeById } from "../data/recipeSlice";
+import { getRecipeSummary } from "../utils/aiSummary";
+
 
 
 import { deleteRecipie } from "../data/recipeSlice";
@@ -9,6 +11,8 @@ import { deleteRecipie } from "../data/recipeSlice";
 import { useNavigate } from "react-router-dom";
 
 const RecipeDetails = () => {
+
+ 
 
   // Get recipe id 
   const { id } = useParams();
@@ -20,6 +24,9 @@ const RecipeDetails = () => {
   const recipe = useSelector(
     state => state.recipes.selectedRecipe
   );
+//summary state
+  const [summary, setSummary] = useState("");
+const [loading, setLoading] = useState(false);
 
   // Timer state 
   const [timer, setTimer] = useState(0);
@@ -46,12 +53,36 @@ const RecipeDetails = () => {
     if (ing) ingredients.push(ing);
   }
 
+ // handlesummary
+  const handleSummary = async () => {
+  setLoading(true);
+
+  const ingredients =Object.keys(recipe).filter((key)=>
+  key.startsWith("strIngredient")&&recipe[key])
+  .map((key)=>recipe[key]). join(",");
+  
+ 
+ 
+
+const summary=`This recipe for ${recipe.strMeal} uses ${ingredients}.Its easy to follow. `;
+setSummary(summary);
+};
+
+
 
 
 
 return (
   <div className=" min-h-screen bg-gradient-to-r from-gray-100 to-yellow-100 px-4 py-8">
     <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6">
+
+       {/* back to recipie */}
+        <button
+          onClick={() => navigate("/recipies")}
+          className="bg-yellow-400 text-white px-4 py-2 rounded-lg hover:bg-yellow-900 transition  hover:scale-105 cursor-pointer"
+        >
+          &gt;
+        </button>
 
       <h1 className="text-3xl font-extrabold mb-4">
         {recipe.strMeal}
@@ -80,7 +111,7 @@ return (
         {recipe.strInstructions}
       </p>
 
-
+  {/* timer button */}
       <div className="flex flex-wrap gap-4">
         <button
           onClick={() => setTimer(timer + 5)}
@@ -88,19 +119,28 @@ return (
         >
           ⏱ Add 5 mins
         </button>
-
+    {/* print */}
         <button
           onClick={() => window.print()}
           className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition  hover:scale-105 cursor-pointer"
         >
           🖨 Print Recipe
         </button>
-        <button
-          onClick={() => navigate("/recipies")}
-          className="bg-yellow-400 text-white px-4 py-2 rounded-lg hover:bg-yellow-900 transition  hover:scale-105 cursor-pointer"
-        >
-          Back to  Recipe
-        </button>
+           {/* summary */}
+         <button
+  onClick={handleSummary}
+  className="bg-green-600 text-white px-4 py-2 rounded"
+>
+  {loading ? "Summarizing..." : "Summarize Recipe"}
+</button>
+
+{summary && (
+  <div className="mt-4 p-4 bg-gray-100 rounded">
+    <h3 className="font-bold mb-2">AI Summary</h3> 
+    <p>{summary}</p>
+  </div>
+)} 
+      
 
         {recipe.isLocal && (
           <button onClick={() => {
