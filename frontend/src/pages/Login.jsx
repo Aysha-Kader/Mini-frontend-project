@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import axios from "axios";
 import { login } from "../data/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  // Redux dispatch function
-  const dispatch = useDispatch();
-
+  
   //  navigate between pages
   const navigate = useNavigate();
 
@@ -17,12 +15,12 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload on submit
 
-    // Dispatch login action with email
-    dispatch(login({ email }));
-
+    try{
+      const res=await axios.post("http://localhost:")
+    }
     // navigate user to home page after login
     navigate("/");
   };
