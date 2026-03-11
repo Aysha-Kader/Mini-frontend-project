@@ -19,10 +19,16 @@ const Login = () => {
     e.preventDefault(); // Prevent page reload on submit
 
     try{
-      const res=await axios.post("http://localhost:")
-    }
+      const res=await axios.post("https://mini-frontend-project.onrender.com/api/auth/login",{email,password});
+      localStorage.setItem("token",res.data.token);
+      localStorage.setItem("user",JSON.stringify(res.data.user));
+    
     // navigate user to home page after login
     navigate("/");
+    }
+    catch(err){
+      alert("login failed");
+    }
   };
 
   return (

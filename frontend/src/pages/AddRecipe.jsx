@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import axios from "axios";
 import { addRecipe } from "../data/recipeSlice";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -9,8 +9,7 @@ const AddRecipe = () => {
   // Get login status 
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
-  // Redux dispatch function
-  const dispatch = useDispatch();
+  
 
   // Used to move to another page
   const navigate = useNavigate();
@@ -41,7 +40,7 @@ const AddRecipe = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page refresh
 
     // Convert ingredients string into array
@@ -67,12 +66,23 @@ const AddRecipe = () => {
       newRecipe[`strIngredient${i + 1}`] = ing.trim();
     });
 
-    // Saving recipe to Redux 
-    dispatch(addRecipe(newRecipe));
+   const token=localStorage.getItem("token")
+;
+try{
+  const res=await axios.post("https://mini-frontend-project.onrender.com/api/recipes/create",newRecipe,{
+    headers:{
+      Authorization:`Bearer ${token}`
+    }
+  });
+  alert("Recipie added succesfully");
+  navigate("/recipes");
 
-    // Navigate to recipe details page
-    navigate(`/recipes/${newRecipe.idMeal}`);
-  };
+}catch (error){
+console.log(error);
+
+alert("Error adding recipie");
+};
+
 
 
 
@@ -168,5 +178,6 @@ return (
   </div>
 );
 };
+}
 
 export default AddRecipe;
