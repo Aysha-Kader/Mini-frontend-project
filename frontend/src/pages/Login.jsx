@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { login } from "../data/authSlice";
+import { loginUser } from "../data/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {

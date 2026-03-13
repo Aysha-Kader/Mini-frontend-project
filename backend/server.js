@@ -14,7 +14,8 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin:"https://mini-frontend-project.vercel.app/"
+  origin:["http://localhost:5173","https://mini-frontend-project.vercel.app"],
+  credentials:true
 }));
 app.use(express.json());
 

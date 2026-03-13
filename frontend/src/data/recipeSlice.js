@@ -1,108 +1,81 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import API from "../axios/api.js";
 
-
-//  api
-
+// FETCH ALL RECIPES FROM BACKEND
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
   async () => {
-    const res = await fetch(
-      "https://www.themealdb.com/api/json/v1/1/search.php?s="
-    );
-    const data = await res.json();
-    return data.meals || [];
+
+    const res = await API.get("/recipes");
+
+    return res.data; // recipes from database
   }
 );
 
-
+// FETCH SINGLE RECIPE
 export const fetchRecipeById = createAsyncThunk(
   "recipes/fetchRecipeById",
-  async (id, { getState }) => {
-    const localRecipe = getState().recipes.recipes.find(
-      r => r.idMeal === id
-    );
+  async (id) => {
 
-    if (localRecipe) return localRecipe;
+    const res = await API.get(`/recipes/${id}`);
 
-    const res = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-    );
-    const data = await res.json();
-    return data.meals ? data.meals[0] : null;
+    return res.data;
   }
 );
-//  other values that api doesnt provide
-const recipieMetadata = {
-  "53322": { cookTime: 50, difficulty: "Medium", diet: "Veg" },
-  "53254": { cookTime: 15, difficulty: "Easy", diet: "Vegan" },
-  "53133": { cookTime: 75, difficulty: "Medium", diet: "Non-veg" },
-  "53220": { cookTime: 120, difficulty: "Hard", diet: "Non-veg" },
 
-  "53086": { cookTime: 20, difficulty: "Easy", diet: "Non-veg" },
-  "53065": { cookTime: 45, difficulty: "Hard", diet: "Non-veg" },
-  "53256": { cookTime: 10, difficulty: "Easy", diet: "Veg" },
-  "53146": { cookTime: 90, difficulty: "Hard", diet: "Non-veg" },
+// CREATE NEW RECIPE
+export const createRecipe = createAsyncThunk(
+  "recipes/createRecipe",
+  async (recipeData) => {
 
-  "53060": { cookTime: 45, difficulty: "Medium", diet: "Non-veg" },
-  "52977": { cookTime: 25, difficulty: "Easy", diet: "Veg" },
-  "53311": { cookTime: 60, difficulty: "Medium", diet: "Non-veg" },
-  "53269": { cookTime: 15, difficulty: "Easy", diet: "Vegan" },
+    const token = localStorage.getItem("token");
 
-  "52978": { cookTime: 30, difficulty: "Easy", diet: "Veg" },
-  "53216": { cookTime: 40, difficulty: "Medium", diet: "Veg" },
-  "53026": { cookTime: 30, difficulty: "Medium", diet: "Vegan" },
-  "53069": { cookTime: 35, difficulty: "Medium", diet: "Non-veg" },
+    const res = await API.post(
+      "/recipes/create",
+      recipeData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
 
-  "53151": { cookTime: 60, difficulty: "Hard", diet: "Non-veg" },
-  "53139": { cookTime: 25, difficulty: "Easy", diet: "Vegan" },
-  "53310": { cookTime: 120, difficulty: "Hard", diet: "Veg" },
-  "53013": { cookTime: 20, difficulty: "Easy", diet: "Non-veg" },
+    return res.data;
+  }
+);
 
-  "53266": { cookTime: 30, difficulty: "Medium", diet: "Vegan" },
-  "52844": { cookTime: 60, difficulty: "Hard", diet: "Non-veg" },
-  "52785": { cookTime: 25, difficulty: "Easy", diet: "Veg" },
-  "53027": { cookTime: 45, difficulty: "Medium", diet: "Vegan" },
-  "53027": { cookTime: 30, difficulty: "Easy", diet: "Veg" },
+// DELETE RECIPE
+export const deleteRecipe = createAsyncThunk(
+  "recipes/deleteRecipe",
+  async (id) => {
 
-}
-// slice
+    const token = localStorage.getItem("token");
+
+    await API.delete(`/recipes/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return id;
+  }
+);
+
 const recipeSlice = createSlice({
   name: "recipes",
+
   initialState: {
     recipes: [],
     selectedRecipe: null,
     favorites: [],
     loading: false,
   },
-  // reducers
+
   reducers: {
-    // add
-    addRecipe: (state, action) => {
-      state.recipes.unshift({
-        ...action.payload,
-        isLocal: true,
-      });
-    },
 
-    // DELETE 
-    deleteRecipie: (state, action) => {
-      const id = action.payload;
-
-      state.recipes = state.recipes.filter(
-        recipe => recipe.idMeal !== id
-      );
-
-      state.favorites = state.favorites.filter(
-        favId => favId !== id
-      );
-
-      if (state.selectedRecipe?.idMeal === id) {
-        state.selectedRecipe = null;
-      }
-    },
-
-    /* TOGGLE FAVORITE */
+    // TOGGLE FAVORITE
     toggleFavorite: (state, action) => {
+
       const id = action.payload;
 
       if (state.favorites.includes(id)) {
@@ -110,48 +83,45 @@ const recipeSlice = createSlice({
       } else {
         state.favorites.push(id);
       }
+
     },
+
   },
 
-  extraReducers: builder => {
+  extraReducers: (builder) => {
+
     builder
 
-      .addCase(fetchRecipes.pending, state => {
+      // FETCH ALL RECIPES
+      .addCase(fetchRecipes.pending, (state) => {
         state.loading = true;
       })
 
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
-
-
-        const localRecipes = state.recipes.filter(
-          r => r.isLocal === true
-        );
-
-        const apiRecipes = (action.payload || []).map(r => ({
-          ...r,
-          ...recipieMetadata[r.idMeal],
-        }));
-
-
-        state.recipes = [...localRecipes, ...apiRecipes];
+        state.recipes = action.payload;
       })
 
-      .addCase(fetchRecipes.rejected, state => {
-        state.loading = false;
-      })
-
-
+      // FETCH SINGLE RECIPE
       .addCase(fetchRecipeById.fulfilled, (state, action) => {
         state.selectedRecipe = action.payload;
+      })
+
+      // CREATE RECIPE
+      .addCase(createRecipe.fulfilled, (state, action) => {
+        state.recipes.unshift(action.payload);
+      })
+
+      // DELETE RECIPE
+      .addCase(deleteRecipe.fulfilled, (state, action) => {
+        state.recipes = state.recipes.filter(
+          recipe => recipe._id !== action.payload
+        );
       });
+
   },
 });
 
-export const {
-  addRecipe,
-  deleteRecipie,
-  toggleFavorite,
-} = recipeSlice.actions;
+export const { toggleFavorite } = recipeSlice.actions;
 
 export default recipeSlice.reducer;

@@ -6,7 +6,9 @@ export const createRecipe = async (req, res) => {
 
   try {
 
-    const recipe = new Recipe(req.body);
+    const recipe = new Recipe({
+      ...req.body,
+    user:req.user});
 
     await recipe.save();
 
@@ -26,7 +28,9 @@ export const getRecipes = async (req, res) => {
 
   try {
 
-    const recipes = await Recipe.find();
+    const recipes = await Recipe
+    .find()
+    .populate("user","name");
 
     res.json(recipes);
 
@@ -44,8 +48,9 @@ export const getRecipeById = async (req, res) => {
 
   try {
 
-    const recipe = await Recipe.findById(req.params.id);
-
+    const recipe = await Recipe
+    .findById(req.params.id)
+    .populate("user","name");
     res.json(recipe);
 
   } catch (error) {

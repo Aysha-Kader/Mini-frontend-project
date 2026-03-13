@@ -1,90 +1,74 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { addRecipe } from "../data/recipeSlice";
+import API from "../axios/api.js";
 import { useNavigate, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+
 
 const AddRecipe = () => {
 
-  // Get login status 
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-
-  
-
-  // Used to move to another page
   const navigate = useNavigate();
 
-  // If user is not logged in, move to login page
-  if (!isLoggedIn) {
-    return <Navigate to="/login" replace />;
-  }
-
-  // Local state to store recipe form data
-  const [recipe, setRecipe] = useState({
-    name: "",
-    image: "",
-    area: "",
-    ingredients: "",
-    instructions: "",
-    diet: "",         
-  difficulty: "",  
-  cookTime: ""  
+  const [recipe,setRecipe] = useState({
+    name:"",
+    image:"",
+    area:"",
+    ingredients:"",
+    instructions:"",
+    diet:"",
+    difficulty:"",
+    cookTime:""
   });
 
-  // Handle  for all form fields
   const handleChange = (e) => {
+
     setRecipe({
       ...recipe,
-      [e.target.name]: e.target.value // Update  field
+      [e.target.name]: e.target.value
     });
+
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent page refresh
 
-    // Convert ingredients string into array
+    e.preventDefault();
 
-    const ingredientsArr = recipe.ingredients.split(",");
+    const token = localStorage.getItem("token");
 
-    //  new recipe object
-    const newRecipe = {
-      idMeal: Date.now().toString(),
-      isLocal: true,
-      strMeal: recipe.name,
-      strMealThumb: recipe.image,
-      strArea: recipe.area,
-      strInstructions: recipe.instructions,
-      diet: recipe.diet,
-    difficulty: recipe.difficulty,
-    cookTime: Number(recipe.cookTime),
-    };
+    try {
 
-    // Add ingredients 
+      await API.post(
+        "/recipes",
+        {
+          name: recipe.name,
+          image: recipe.image,
+          area: recipe.area,
+          ingredients: recipe.ingredients.split(","),
+          instructions: recipe.instructions,
+          diet: recipe.diet,
+          difficulty: recipe.difficulty,
+          cookTime: Number(recipe.cookTime)
+        },
+        {
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
+      );
 
-    ingredientsArr.forEach((ing, i) => {
-      newRecipe[`strIngredient${i + 1}`] = ing.trim();
-    });
+      alert("Recipe added successfully");
 
-   const token=localStorage.getItem("token")
-;
-try{
-  const res=await axios.post("https://mini-frontend-project.onrender.com/api/recipes/create",newRecipe,{
-    headers:{
-      Authorization:`Bearer ${token}`
+      navigate("/recipes");
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Error adding recipe");
+
     }
-  });
-  alert("Recipie added succesfully");
-  navigate("/recipes");
 
-}catch (error){
-console.log(error);
+  };
 
-alert("Error adding recipie");
-};
-
-
-
+ 
 
 
 return (
@@ -178,6 +162,6 @@ return (
   </div>
 );
 };
-}
+
 
 export default AddRecipe;

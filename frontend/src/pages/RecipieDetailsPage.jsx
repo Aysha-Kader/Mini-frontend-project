@@ -6,7 +6,7 @@ import { getRecipeSummary } from "../utils/aiSummary";
 
 
 
-import { deleteRecipie } from "../data/recipeSlice";
+import { deleteRecipe } from "../data/recipeSlice";
 
 import { useNavigate } from "react-router-dom";
 
