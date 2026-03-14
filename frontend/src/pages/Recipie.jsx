@@ -56,7 +56,7 @@ const Recipes = () => {
     ?.filter(r => {
       const searchText = search.toLowerCase();
 
-      const mealMatch = r.strMeal?.toLowerCase().includes(searchText);
+      const mealMatch = r.strname?.toLowerCase().includes(searchText);
       const ingredientMatch = getIngredientsText(r).includes(searchText);
 
       return mealMatch || ingredientMatch;
@@ -64,7 +64,7 @@ const Recipes = () => {
 
     // Cuisine filter
     .filter(
-      r => cuisine === "All" || r.strArea === cuisine || r.area === cuisine
+      r => cuisine === "All" || r.area === cuisine || r.area === cuisine
     )
 
     // Cook time filter
