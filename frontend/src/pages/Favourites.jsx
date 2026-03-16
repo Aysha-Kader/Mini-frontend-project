@@ -24,7 +24,7 @@ const Favourites = () => {
   // Filter only favorite recipes
 
   const favRecipes = recipes.filter(recipe =>
-    favorites.includes(recipe.idMeal)
+    favorites.includes(recipe._id)
   );
 
   return (
@@ -42,7 +42,7 @@ const Favourites = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {favRecipes.map(recipe => (
-            <RecipeCard key={recipe.idMeal} recipe={recipe} />
+            <RecipeCard key={recipe._id} recipe={recipe} />
           ))}
         </div>
       )}

@@ -3,21 +3,22 @@ import { FaHeart, FaStar } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../axios/api.js";
-import {useDispatch} from "react-redux";
+import {useDispatch,useSelector} from "react-redux";
 
 const RecipeCard = ({ recipe }) => {
 const dispatch=useDispatch();
   const navigate = useNavigate();
-  const [isFav,setIsFav] = useState(false);
+ const isFav=favourites.includes(recipie._id);
 
   const toggleFavorite = async () => {
 
     const token = localStorage.getItem("token");
+    const favourites=useSelector(state => state.recipes.favourites);
 
     try{
 
      const res= await API.post(
-        `/favoruites/${recipe._id}`,
+        `/favourites/${recipe._id}`,
         {},
         {
           headers:{
@@ -25,7 +26,10 @@ const dispatch=useDispatch();
           }
         }
       );
-
+    dispatch({
+      type:"recipes/toggleFvorite",
+      payload:recipe._id
+    });
       setIsFav(!isFav);
 
     }catch(err){
