@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchRecipes } from "../data/recipeSlice";
 import RecipeCard from "../components/RecipieCard";
 
-const Favourites = () => {
+const Favorites = () => {
   // dispatch function
   const dispatch = useDispatch();
 
@@ -50,4 +50,4 @@ const Favourites = () => {
   );
 };
 
-export default Favourites;
+export default Favorites;

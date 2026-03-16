@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; 
 import { HiMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
@@ -7,7 +7,8 @@ import { logout } from "../data/authSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn, user } = useSelector((state) => state.auth);
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation(); 
@@ -16,7 +17,15 @@ const Navbar = () => {
     navigate(path);
     setIsOpen(false);
   };
-
+  useEffect(()=>{
+    const token=localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  },[]);
+const handleLogout=()=>{
+ localStorage.removeItem("token");
+ setIsLoggedIn(false);
+ navigate("/login")
+}
   // helper to check active page
   const isActive = (path) => location.pathname === path;
 
@@ -49,7 +58,7 @@ const Navbar = () => {
             { name: "Home", path: "/" },
             { name: "About", path: "/about" },
             { name: "Recipes", path: "/recipies" },
-            { name: "Favourites", path: "/favourites" },
+            { name: "Favorites", path: "/favorites" },
           ].map((item) => (
             <li
               key={item.path}
@@ -65,9 +74,8 @@ const Navbar = () => {
         {/* Login / Logout */}
         {isLoggedIn ? (
           <div className="hidden md:flex items-center gap-3">
-            <span className="text-sm text-gray-500">{user?.email}</span>
             <button
-              onClick={() => dispatch(logout())}
+              onClick={handleLogout()}
               className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
             >
               Logout
@@ -83,9 +91,7 @@ const Navbar = () => {
 
          
         )}
-        <button   onClick={() => navigate("/register")}
-            className="hidden md:block bg-orange-800 text-white px-4 py-2 rounded-lg hover:bg-orange-600 cursor-pointer">Sign up
-             </button>
+       
       </nav>
 
       {/* Mobile Menu */}
@@ -97,7 +103,7 @@ const Navbar = () => {
             { name: "Home", path: "/" },
             { name: "About", path: "/about" },
             { name: "Recipes", path: "/recipies" },
-            { name: "Favourites", path: "/favourites" },
+            { name: "Favorites", path: "/favorites" },
             {name:"Sign up",path:"/register"}
           ].map((item) => (
             <li
@@ -124,7 +130,7 @@ const Navbar = () => {
           {isLoggedIn && (
             <button
               onClick={() => {
-                dispatch(logout());
+               handleLogout();
                 setIsOpen(false);
               }}
               className="bg-red-500 rounded-lg p-2 text-white hover:bg-red-600"

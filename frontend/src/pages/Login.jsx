@@ -61,7 +61,8 @@ const Login = () => {
         <button className="w-full bg-orange-400 text-white py-3 rounded-xl hover:bg-orange-500 transition">
           Login
         </button>
-      </form>
+        <br></br> 
+        Don't have an account? <span onClick={()=>navigate("/register")} className="text-orange-800 cursor-pointer">Register</span>     </form>
     </div>
   );
 };

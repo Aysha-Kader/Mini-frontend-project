@@ -5,7 +5,7 @@ import  connectDB  from"./db/config.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import recipeRoutes from "./routes/recipeRoutes.js";
-import favouriteRoutes from "./routes/favouriteRoutes.js";
+import favoriteRoutes from "./routes/favoriteRoutes.js";
 
 
 
@@ -28,7 +28,7 @@ app.use(express.json());
 app.use("/api/auth",authRoutes);
 app.use("/api/users",userRoutes);
 app.use("/api/recipes",recipeRoutes);
-app.use("/api/favourites",favouriteRoutes)
+app.use("/api/favorites",favoriteRoutes)
 app.get("/", (req, res) => {
   res.send("API Running...");
 });

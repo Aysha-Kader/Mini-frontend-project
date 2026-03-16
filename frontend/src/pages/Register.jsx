@@ -33,7 +33,11 @@ const Register = () => {
         <button className="w-full bg-orange-400 text-white p-2 rounded">
           Register
         </button>
-      </form>
+         <br></br> 
+       Already have an account? <span onClick={()=>navigate("/login")} className="text-gray-800 cursor-pointer">Login</span> 
+           </form>
+   
+      
     </div>
   );
 };

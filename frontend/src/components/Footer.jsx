@@ -25,7 +25,7 @@ const Footer = () => {
           <ul className="space-y-2 text-sm">
             <li className="hover:text-yellow-400 cursor-pointer" onClick={() => navigate("/")}>Home</li>
             <li className="hover:text-yellow-400 cursor-pointer" onClick={() => navigate("/recipies")}>Recipes</li>
-            <li className="hover:text-yellow-400 cursor-pointer" onClick={() => navigate("/favourites")}>Favourites</li>
+            <li className="hover:text-yellow-400 cursor-pointer" onClick={() => navigate("/favorites")}>Favorites</li>
             <li className="hover:text-yellow-400 cursor-pointer" onClick={() => navigate("/add-recipe")}>Add Recipe</li>
           </ul>
         </div>

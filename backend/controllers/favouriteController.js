@@ -2,44 +2,44 @@ import User from "../models/User.js";
 
 
 // ADD FAVOURITE
-export const addFavourite = async (req, res) => {
+export const addFavorite = async (req, res) => {
 
   const user = await User.findById(req.user);
 
-  if (!user.favourites.map(fav=> fav.toString()).includes(req.params.id)) {
-    user.favourites.push(req.params.id);
+  if (!user.favorites.map(fav=> fav.toString()).includes(req.params.id)) {
+    user.favorites.push(req.params.id);
   }
 
   await user.save();
 
-  res.json(user.favourites);
+  res.json(user.favorites);
 
 };
 
 
 // REMOVE FAVOURITE
-export const removeFavourite = async (req, res) => {
+export const removeFavorite = async (req, res) => {
 
   const user = await User.findById(req.user);
 
-  user.favourites = user.favourites.filter(
+  user.favorites = user.favorites.filter(
     fav => fav.toString() !== req.params.id
   );
 
   await user.save();
 
-  res.json(user.favourites);
+  res.json(user.favorites);
 
 };
 
 
 // GET FAVOURITES
-export const getFavourites = async (req, res) => {
+export const getFavorites = async (req, res) => {
 
   const user = await User
     .findById(req.user)
-    .populate("favourites");
+    .populate("favorites");
 
-  res.json(user.favourites);
+  res.json(user.favorites);
 
 };

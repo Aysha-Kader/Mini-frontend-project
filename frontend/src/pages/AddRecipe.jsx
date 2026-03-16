@@ -56,7 +56,7 @@ const AddRecipe = () => {
 
       alert("Recipe added successfully");
 
-      navigate("/recipes");
+      navigate("/recipies");
 
     } catch (error) {
 
