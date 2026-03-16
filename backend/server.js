@@ -20,7 +20,7 @@ app.use((req,res,next)=>{
 });
 
 app.use(cors({
-  origin:["http://localhost:5173","https://mini-frontend-project-e6eqvercel.app"],
+  origin:["http://localhost:5173","https://mini-frontend-project-e6eq.vercel.app/"],
   credentials:true
 }));
 app.use(express.json());
