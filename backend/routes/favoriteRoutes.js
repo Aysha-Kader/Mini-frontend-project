@@ -4,7 +4,7 @@ import {
   addFavorite,
   removeFavorite,
   getFavorites
-} from "../controllers/favoriteController.js";
+} from "../controllers/favouriteController.js";
 
 import  protect  from "../middleware/authMiddleware.js";
 

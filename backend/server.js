@@ -13,14 +13,10 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use((req,res,next)=>{
-  console.log(`${req.method} request to ${req.url}`);
-    next();
-  
-});
+
 
 app.use(cors({
-  origin:["http://localhost:5173","https://mini-frontend-project-e6eq.vercel.app/"],
+  origin:["http://localhost:5173","https://mini-frontend-project-e6eq.vercel.app"],
   credentials:true
 }));
 app.use(express.json());
