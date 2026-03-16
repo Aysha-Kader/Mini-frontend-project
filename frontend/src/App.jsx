@@ -7,7 +7,8 @@ import RecipieDetailsPage from "./pages/RecipieDetailsPage";
 import AddRecipe from "./pages/AddRecipe";
 import Favourites from './pages/Favourites';
 import Footer from "./components/Footer"
-import Login from "./pages/Login"
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/add-recipe" element={<AddRecipe />} />
             <Route path="/favourites" element={<Favourites />} />
             <Route path="/login" element={<Login/>}/>
+            <Route path="/register" element={<Register/>}/>
             
            </Routes>
            <Footer />

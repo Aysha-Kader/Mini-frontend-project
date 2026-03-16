@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // <-- import useLocation
+import { useNavigate, useLocation } from "react-router-dom"; 
 import { HiMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -78,9 +78,14 @@ const Navbar = () => {
             onClick={() => navigate("/login")}
             className="hidden md:block bg-orange-400 text-white px-4 py-2 rounded-lg hover:bg-orange-600 cursor-pointer"
           >
-            Login
+           Sign in
           </button>
+
+         
         )}
+        <button   onClick={() => navigate("/register")}
+            className="hidden md:block bg-orange-800 text-white px-4 py-2 rounded-lg hover:bg-orange-600 cursor-pointer">Sign up
+             </button>
       </nav>
 
       {/* Mobile Menu */}
@@ -93,6 +98,7 @@ const Navbar = () => {
             { name: "About", path: "/about" },
             { name: "Recipes", path: "/recipies" },
             { name: "Favourites", path: "/favourites" },
+            {name:"Sign up",path:"/register"}
           ].map((item) => (
             <li
               key={item.path}
@@ -125,6 +131,7 @@ const Navbar = () => {
             >
               Logout
             </button>
+
           )}
         </div>
       )}

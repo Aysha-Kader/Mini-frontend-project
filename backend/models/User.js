@@ -14,6 +14,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  favourites:[
+    {
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"Recipe",
+    }
+  ]
 }, { timestamps: true });
 
 const User=mongoose.model("User",userSchema);

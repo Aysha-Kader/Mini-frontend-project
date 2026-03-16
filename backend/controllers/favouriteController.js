@@ -6,7 +6,7 @@ export const addFavourite = async (req, res) => {
 
   const user = await User.findById(req.user);
 
-  if (!user.favourites.includes(req.params.id)) {
+  if (!user.favourites.includes.map(fav=> fav.toString()).includes(req.params.id)) {
     user.favourites.push(req.params.id);
   }
 

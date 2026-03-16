@@ -5,6 +5,7 @@ import  connectDB  from"./db/config.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import recipeRoutes from "./routes/recipeRoutes.js";
+import favouriteRoutes from "./routes/favouriteRoutes.js";
 
 
 
@@ -12,9 +13,14 @@ dotenv.config();
 connectDB();
 
 const app = express();
+app.use((req,res,next)=>{
+  console.log(`${req.method} request to ${req.url}`);
+    next();
+  
+});
 
 app.use(cors({
-  origin:["http://localhost:5173","https://mini-frontend-project.vercel.app"],
+  origin:["http://localhost:5173","https://mini-frontend-project-e6eqvercel.app"],
   credentials:true
 }));
 app.use(express.json());
@@ -22,7 +28,7 @@ app.use(express.json());
 app.use("/api/auth",authRoutes);
 app.use("/api/users",userRoutes);
 app.use("/api/recipes",recipeRoutes);
-
+app.use("/api/favourites",favouriteRoutes)
 app.get("/", (req, res) => {
   res.send("API Running...");
 });

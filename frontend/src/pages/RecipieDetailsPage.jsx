@@ -3,18 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchRecipeById } from "../data/recipeSlice";
 import { getRecipeSummary } from "../utils/aiSummary";
-
-
-
 import { deleteRecipe } from "../data/recipeSlice";
-
 import { useNavigate } from "react-router-dom";
 
 const RecipeDetails = () => {
-
- 
-
-  // Get recipe id 
+ // Get recipe id 
   const { id } = useParams();
 
   // Redux dispatch function
@@ -43,16 +36,8 @@ const [loading, setLoading] = useState(false);
   if (!recipe) return <p className="text-center">Loading...</p>;
 
   // Collecting all ingredients from recipe object
-  const ingredients = [];
-
-
-  for (let i = 1; i <= 20; i++) {
-    const ing = recipe[`strIngredient${i}`];
-
-
-    if (ing) ingredients.push(ing);
-  }
-
+  const ingredients = recipe.ingredients || [];
+  
  // handlesummary
   const handleSummary = async () => {
   setLoading(true);
@@ -64,7 +49,7 @@ const [loading, setLoading] = useState(false);
  
  
 
-const summary=`This recipe for ${recipe.strMeal} uses ${ingredients}.Its easy to follow. `;
+const summary=`This recipe for ${recipe.name} uses ${ingredients}.Its easy to follow. `;
 setSummary(summary);
 };
 
@@ -81,16 +66,16 @@ return (
           onClick={() => navigate("/recipies")}
           className="bg-yellow-400 text-white px-4 py-2 rounded-lg hover:bg-yellow-900 transition  hover:scale-105 cursor-pointer"
         >
-          &gt;
+          &lt;
         </button>
 
       <h1 className="text-3xl font-extrabold mb-4">
-        {recipe.strMeal}
+        {recipe.name}
       </h1>
 
       <img
-        src={recipe.strMealThumb}
-        alt={recipe.strMeal}
+        src={recipe.photo}
+        alt={recipe.name}
         className="w-[800px] h-[500px] rounded-xl mb-6"
       />
 
@@ -108,7 +93,7 @@ return (
       {/*instruction*/}
       <h2 className="text-xl font-semibold mb-2">Instructions</h2>
       <p className="text-gray-600 whitespace-pre-line mb-6">
-        {recipe.strInstructions}
+        {recipe.instructions}
       </p>
 
   {/* timer button */}
@@ -149,7 +134,7 @@ return (
             );
 
             if (confirmDelete) {
-              dispatch(deleteRecipie(recipe.idMeal));
+              dispatch(deleteRecipie(recipe._id));
               navigate("/recipies");
             }
 

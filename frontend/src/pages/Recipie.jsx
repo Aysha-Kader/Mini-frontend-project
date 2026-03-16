@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import { fetchRecipes } from "../data/recipeSlice";
 import RecipeCard from "../components/RecipieCard";
 import { useNavigate } from "react-router-dom";
+import {useDispatch,useSelector} from "react-redux"
 
 const Recipes = () => {
 
-  // Redux dispatch function
-  const dispatch = useDispatch();
+  const dispatch=useDispatch();
 
   //  page navigation
   const navigate = useNavigate();
+
+  
 
   // Get recipes data and loading state from Redux 
   const { recipes, loading } = useSelector(state => state.recipes);
@@ -26,40 +28,24 @@ const Recipes = () => {
 
   // Fetch recipes when loads (once)
   useEffect(() => {
-    if (recipes.length === 0) {
+    
       dispatch(fetchRecipes());
-    }
-  }, [dispatch, recipes.length]);
+   
+  }, [dispatch]);
 
 
-  // Used for searching by ingredient
-  const getIngredientsText = (recipe) => {
-    let ingredients = [];
-
-
-    for (let i = 1; i <= 20; i++) {
-      const ingredient = recipe[`strIngredient${i}`];
-
-
-      if (ingredient && ingredient.trim() !== "") {
-        ingredients.push(ingredient.toLowerCase());
-      }
-    }
-
-    // Convert ingredients array to string
-    return ingredients.join(" ");
-  };
-
+ 
+    
 
   const filteredRecipes = recipes
     // Search filter 
     ?.filter(r => {
       const searchText = search.toLowerCase();
 
-      const mealMatch = r.strname?.toLowerCase().includes(searchText);
-      const ingredientMatch = getIngredientsText(r).includes(searchText);
+      const mealMatch = r.name?.toLowerCase().includes(searchText);
+      const ingredientMatch = r.ingredients?.join("").toLowerCase().includes(searchText);
 
-      return mealMatch || ingredientMatch;
+      return   mealMatch || ingredientMatch
     })
 
     // Cuisine filter
@@ -172,7 +158,7 @@ return (
       </div>
     )}
   </div>
-);
-};
+)};
+
 
 export default Recipes;
