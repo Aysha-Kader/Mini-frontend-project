@@ -3,10 +3,9 @@ import dotenv from "dotenv";
 import  cors from "cors";
 import  connectDB  from"./db/config.js";
 import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
+
 import recipeRoutes from "./routes/recipeRoutes.js";
 import favoriteRoutes from "./routes/favoriteRoutes.js";
-import aiRoutes from "./routes/aiRoutes.js";
 
 
 dotenv.config();
@@ -20,12 +19,12 @@ app.use(cors({
   credentials:true
 }));
 app.use(express.json());
-
+//routes
 app.use("/api/auth",authRoutes);
-app.use("/api/users",userRoutes);
+
 app.use("/api/recipes",recipeRoutes);
 app.use("/api/favorites",favoriteRoutes)
-app.use("/api/ai",aiRoutes)
+
 app.get("/", (req, res) => {
   res.send("API Running...");
 });
