@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../axios/api.js";
 import {useDispatch,useSelector} from "react-redux";
+import {toggleFavorite} from "../data/recipeSlice";
 
 
 const RecipeCard = ({ recipe }) => {
@@ -15,35 +16,18 @@ const dispatch=useDispatch();
 
  const isFav=favorites.includes(recipe._id);
 
-  const toggleFavorite = async () => {
+  const handleFavorite = async () => {
 
     const token = localStorage.getItem("token");
     if(!token ){
       alert("please login to add favorites");
       navigate("/login");
       return;
-    }
+    };
  
-    try{
-
-     const res= await API.post(
-        `/favourites/${recipe._id}`,
-        {},
-        {
-          headers:{
-            Authorization:`Bearer ${token}`
-          }
-        }
-      );
-    dispatch({
-      type:"recipes/toggleFavorite",
-      payload:recipe._id
-    });
     
-
-    }catch(err){
-      console.log(err);
-    }
+    
+dispatch(toggleFavorite(recipe._id));
 
   };
   return (
@@ -77,7 +61,7 @@ const dispatch=useDispatch();
           </button>
 
           <FaHeart
-            onClick={ toggleFavorite}
+            onClick={ handleFavorite}
             className={`text-xl cursor-pointer transition ${isFav? "text-red-500" : "text-gray-300 hover:text-red-400"
             }`}
           />
