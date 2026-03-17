@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+
 import { loginUser } from "../data/authSlice";
 import { useNavigate } from "react-router-dom";
 import {fetchFavorites} from "../data/recipeSlice";
@@ -9,7 +9,7 @@ const Login = () => {
   
   //  navigate between pages
   const navigate = useNavigate();
-
+const dispatch=useDispatch();
   // State to store email input value
   const [email, setEmail] = useState("");
 
@@ -21,17 +21,15 @@ const Login = () => {
     e.preventDefault(); // Prevent page reload on submit
 
     try{
-      const res=await axios.post("https://mini-frontend-project.onrender.com/api/auth/login",{email,password});
-      localStorage.setItem("token",res.data.token);
-      localStorage.setItem("user",JSON.stringify(res.data.user));
-
-      dispatch(fetchFvorites)
+     await dispatch(loginUser({email,password})).unwrap();
+      dispatch(fetchFavorites());
 ;    
     // navigate user to home page after login
     navigate("/");
     }
     catch(err){
-      alert("login failed");
+     
+      alert(err.message || "login failed");
     }
   };
 
