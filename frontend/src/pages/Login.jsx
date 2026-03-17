@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { loginUser } from "../data/authSlice";
 import { useNavigate } from "react-router-dom";
+import {fetchFavorites} from "../data/recipeSlice";
+import {useDispatch} from "react-redux";
 
 const Login = () => {
   
@@ -22,7 +24,9 @@ const Login = () => {
       const res=await axios.post("https://mini-frontend-project.onrender.com/api/auth/login",{email,password});
       localStorage.setItem("token",res.data.token);
       localStorage.setItem("user",JSON.stringify(res.data.user));
-    
+
+      dispatch(fetchFvorites)
+;    
     // navigate user to home page after login
     navigate("/");
     }

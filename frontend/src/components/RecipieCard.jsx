@@ -79,7 +79,7 @@ const dispatch=useDispatch();
           <FaHeart
             onClick={ toggleFavorite}
             className={`text-xl cursor-pointer transition ${isFav? "text-red-500" : "text-gray-300 hover:text-red-400"
-              }`}
+            }`}
           />
         </div>
       </div>
