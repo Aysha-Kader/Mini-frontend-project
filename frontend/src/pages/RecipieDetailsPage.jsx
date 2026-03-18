@@ -12,11 +12,13 @@ const RecipeDetails = () => {
 
   // Redux dispatch function
   const dispatch = useDispatch();
-
+const user=JSON.parse(localStorage.getItem("user"));
   // Get selected recipe 
   const recipe = useSelector(
     state => state.recipes.selectedRecipe
   );
+
+ 
 //summary state
   const [summary, setSummary] = useState("");
 const [loading, setLoading] = useState(false);
@@ -35,6 +37,11 @@ const [loading, setLoading] = useState(false);
   // Showing loading text until recipe data is available
   if (!recipe) return <p className="text-center">Loading...</p>;
 
+  console.log(recipe.user);
+        console.log(user);
+// access delete button only for the user who added the recipe
+   const isOwner=String(recipe?.user?._id) === String(user?.id);
+    
   // Collecting all ingredients from recipe object
   const ingredients = recipe.ingredients || [];
   
@@ -126,15 +133,15 @@ return (
   </div>
 )} 
       
-
-        {recipe.isLocal && (
+{/* delete button */}
+        {isOwner &&(
           <button onClick={() => {
             const confirmDelete = window.confirm(
               "Are you sure you want to delete this recipe?"
             );
 
             if (confirmDelete) {
-              dispatch(deleteRecipie(recipe._id));
+              dispatch(deleteRecipe(recipe._id));
               navigate("/recipies");
             }
 
@@ -143,6 +150,9 @@ return (
             className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition  hover:scale-105 cursor-pointer">Delete Recipie</button>
 
         )}
+
+
+        
       </div>
     </div>
   </div>
