@@ -43,7 +43,7 @@ const [loading, setLoading] = useState(false);
   setLoading(true);
 
   const ingredients =Object.keys(recipe).filter((key)=>
-  key.startsWith("strIngredient")&&recipe[key])
+  key.startsWith("ingredient")&&recipe[key])
   .map((key)=>recipe[key]). join(",");
   
  

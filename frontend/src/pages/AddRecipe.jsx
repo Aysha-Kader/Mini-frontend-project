@@ -62,7 +62,8 @@ const AddRecipe = () => {
 
       console.log(error);
 
-      alert("Error adding recipe");
+      alert("plese login");
+      navigate("/login");
 
     }
 
