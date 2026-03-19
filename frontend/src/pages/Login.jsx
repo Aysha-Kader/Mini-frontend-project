@@ -25,7 +25,7 @@ const dispatch=useDispatch();
       dispatch(fetchFavorites());
 ;    
     // navigate user to home page after login
-    navigate("/");
+    navigate("/dashboard");
     }
     catch(err){
      
