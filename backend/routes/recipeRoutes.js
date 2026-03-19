@@ -4,7 +4,8 @@ import {
   createRecipe,
   getRecipes,
   getRecipeById,
-  deleteRecipe
+  deleteRecipe,
+  updateRecipe
 } from "../controllers/recipieController.js";
 
 import  protect  from "../middleware/authMiddleware.js";
@@ -18,5 +19,6 @@ router.get("/:id", getRecipeById);
 router.post("/", protect, createRecipe);
 
 router.delete("/:id", protect, deleteRecipe);
+router.put("/id",protect,updateRecipe);
 
 export default router;

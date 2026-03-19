@@ -53,6 +53,20 @@ export const fetchFavorites=createAsyncThunk("recipes/fetchFavorites",
       return res.data;
   }
 );
+
+//update recipe
+export const updateRecipe = createAsyncThunk(
+  "recipes/updateRecipe",
+  async ({ id, data }) => {
+    const token = localStorage.getItem("token");
+
+    const res = await API.put(`/recipes/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    return res.data;
+  }
+);
 const recipeSlice = createSlice({
   name: "recipes",
   initialState: {
@@ -94,7 +108,11 @@ const recipeSlice = createSlice({
       .addCase(deleteRecipe.fulfilled, (state, action) => {
         state.recipes = state.recipes.filter(r => r._id !== action.payload);
       })
-      
+           .addCase(updateRecipe.fulfilled, (state, action) => {
+  state.recipes = state.recipes.map(r =>
+    r._id === action.payload._id ? action.payload : r
+  );
+})
       .addCase(fetchFavorites.fulfilled,(state,action)=>{
         state.favorites=action.payload.map(fav => fav._id);
       });
@@ -103,3 +121,8 @@ const recipeSlice = createSlice({
 
 export const { toggleFavorite, setFavorites } = recipeSlice.actions;
 export default recipeSlice.reducer;
+
+
+
+      
+    

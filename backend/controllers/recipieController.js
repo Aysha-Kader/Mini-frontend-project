@@ -78,3 +78,30 @@ export const deleteRecipe = async (req, res) => {
   }
 
 };
+
+//update recipe
+export const updateRecipe = async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    //  only owner can edit
+    if (recipe.user.toString() !== req.user) {
+      return res.status(401).json({ message: "Not authorized" });
+    }
+
+    const updated = await Recipe.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    res.json(updated);
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
