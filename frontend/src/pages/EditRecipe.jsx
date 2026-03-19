@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector} from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchRecipeById, updateRecipe } from "../data/recipeSlice";
 
@@ -7,12 +7,12 @@ const EditRecipe = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+const recipe=useSelector (state => state.recipes.selectedRecipe);
   const [form, setForm] = useState({
-    name: "",
-    image: "",
-    ingredients: "",
-    instructions: "",
+    name:" "  ,
+    image: " ",
+    ingredients: " ",
+    instructions: " ",
   });
 
   useEffect(() => {
@@ -20,10 +20,10 @@ const EditRecipe = () => {
       const res = await dispatch(fetchRecipeById(id)).unwrap();
 
       setForm({
-        name: res.name,
-        image: res.image,
-        ingredients: res.ingredients.join(", "),
-        instructions: res.instructions,
+        name: recipe.name  ,
+        image: recipe.photo ,
+        ingredients: recipe.ingredients.join(", ") ,
+        instructions: recipe.instructions ,
       });
     };
 
@@ -41,11 +41,11 @@ const EditRecipe = () => {
       }
     }));
 
-    navigate(`/recipie/${id}`);
+    navigate(`/recipes/${id}`);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-5 space-y-4">
+    <form onSubmit={handleSubmit} className="p-5 space-y-4  bg-gradient-to-r from-yellow-100 to-gray-100 ">
       <input
         value={form.name}
         onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -54,7 +54,7 @@ const EditRecipe = () => {
       />
 
       <input
-        value={form.image}
+        value={form.photo}
         onChange={(e) => setForm({ ...form, image: e.target.value })}
         placeholder="Image URL"
         className="border p-2 w-full"

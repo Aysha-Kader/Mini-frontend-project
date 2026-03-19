@@ -150,7 +150,15 @@ return (
             className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition  hover:scale-105 cursor-pointer">Delete Recipie</button>
 
         )}
-
+         {/* edit button */}
+{isOwner && (
+  <button
+    onClick={() => navigate(`/edit-recipe/${recipe._id}`)}
+    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition hover:scale-105 cursor-pointer"
+  >
+    Edit Recipe
+  </button>
+)}
 
         
       </div>
