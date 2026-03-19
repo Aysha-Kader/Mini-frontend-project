@@ -4,6 +4,7 @@ import { HiMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../data/authSlice";
+import {setFavorites} from "../data/recipeSlice"
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const Navbar = () => {
 
 const handleLogout=()=>{
  dispatch(logout());
+ dispatch(setFavorites([]));
  navigate("/login");
 }
   // helper to check active page

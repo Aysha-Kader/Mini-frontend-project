@@ -47,7 +47,7 @@ export const fetchFavorites=createAsyncThunk("recipes/fetchFavorites",
   async() => {
     const token=localStorage.getItem("token");
     if(!token) return[];
-    const res=await API.get("/favourites",{
+    const res=await API.get("/favorites",{
       headers: { Authorization:` Bearer ${token} `},
     });
       return res.data;
@@ -109,7 +109,7 @@ const recipeSlice = createSlice({
         state.recipes = state.recipes.filter(r => r._id !== action.payload);
       })
            .addCase(updateRecipe.fulfilled, (state, action) => {
-            state.selectedREcipe=action.payload;
+            state.selectedRecipe=action.payload;
   state.recipes = state.recipes.map(r =>
     r._id === action.payload._id ? action.payload : r
   );

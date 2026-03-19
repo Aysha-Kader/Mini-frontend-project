@@ -11,9 +11,10 @@ const RecipeCard = ({ recipe }) => {
 const dispatch=useDispatch();
   
    const navigate = useNavigate();
-
+const user=useSelector(state=>state.auth.ser);
     const favorites=useSelector(state => state.recipes.favorites);
 
+const isOwner=user && recipe.user === user.id;
  const isFav=favorites.includes(recipe._id);
 
   const handleFavorite = async () => {

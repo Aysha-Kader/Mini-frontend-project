@@ -10,6 +10,7 @@ import Footer from "./components/Footer"
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import EditRecipe from "./pages/EditRecipe";
+import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/edit-recipe/:id" element={<EditRecipe/>} />
+            <Route path="/dashboard" element={<Dashboard/>}/>
             
            </Routes>
            <Footer />
