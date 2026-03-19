@@ -9,13 +9,22 @@ export const loginUser = createAsyncThunk(
     // send login request to backend
     const res = await API.post("/auth/login", userData);
 
+
     // save token in localStorage
     localStorage.setItem("token", res.data.token);
 
+localStorage.setItem("user",JSON.stringify(res.data.user));
     // return user data to redux
     return res.data.user;
   }
 );
+const initialState={
+  isLoggedIn : !!
+  localStorage.getItem("token"),
+  user:
+  JSON.parse(localStorage.getItem("user"))
+  || null,
+};
 
 // REGISTER USER
 export const registerUser = createAsyncThunk(
@@ -31,10 +40,7 @@ export const registerUser = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
 
-  initialState: {
-    isLoggedIn: false,
-    user: null,
-  },
+  initialState,
 
   reducers: {
 
@@ -45,6 +51,7 @@ const authSlice = createSlice({
 
       // remove token
       localStorage.removeItem("token");
+      localStorage.removeItem("user")
     },
   },
 

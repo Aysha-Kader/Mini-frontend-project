@@ -7,7 +7,7 @@ import { logout } from "../data/authSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+  
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -17,14 +17,11 @@ const Navbar = () => {
     navigate(path);
     setIsOpen(false);
   };
-  useEffect(()=>{
-    const token=localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  },[]);
+ const {isLoggedIn}=useSelector(state=> state.auth);
+
 const handleLogout=()=>{
- localStorage.removeItem("token");
- setIsLoggedIn(false);
- navigate("/login")
+ dispatch(logout());
+ navigate("/login");
 }
   // helper to check active page
   const isActive = (path) => location.pathname === path;
@@ -116,7 +113,17 @@ const handleLogout=()=>{
             </li>
           ))}
 
-          {!isLoggedIn && (
+          {isLoggedIn ? (
+            <button
+              onClick={() => {
+               handleLogout();
+                setIsOpen(false);
+                navigate("/login");
+              }}
+              className="bg-red-500 rounded-lg p-2 text-white hover:bg-red-600"
+            >
+              Logout
+            </button>):(
             <button
               onClick={() => {
                 setIsOpen(false);
@@ -124,20 +131,10 @@ const handleLogout=()=>{
               }}
               className="bg-orange-400 rounded-lg p-2 text-white hover:bg-orange-600"
             >
-              Login
+             Sign in
             </button>
-          )}
-          {isLoggedIn && (
-            <button
-              onClick={() => {
-               handleLogout();
-                setIsOpen(false);
-              }}
-              className="bg-red-500 rounded-lg p-2 text-white hover:bg-red-600"
-            >
-              Logout
-            </button>
-
+         
+         
           )}
         </div>
       )}
