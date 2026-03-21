@@ -80,7 +80,7 @@ console.log("recipes",recipes);
               className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden"
             >
               <img
-                src={recipe.photo}
+                src={recipe.photo || recipe.image}
                 alt={recipe.name}
                 className="w-full h-40 object-cover"
               />

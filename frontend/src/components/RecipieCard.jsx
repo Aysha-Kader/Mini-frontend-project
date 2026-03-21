@@ -4,14 +4,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../axios/api.js";
 import {useDispatch,useSelector} from "react-redux";
-import {toggleFavorite} from "../data/recipeSlice";
+import {toggleFavorite,fetchFavorites} from "../data/recipeSlice";
 
 
 const RecipeCard = ({ recipe }) => {
 const dispatch=useDispatch();
   
    const navigate = useNavigate();
-const user=useSelector(state=>state.auth.ser);
+const user=useSelector(state=>state.auth.user);
     const favorites=useSelector(state => state.recipes.favorites);
 
 const isOwner=user && recipe.user === user.id;
@@ -24,11 +24,13 @@ const isOwner=user && recipe.user === user.id;
       alert("please login to add favorites");
       navigate("/login");
       return;
-    };
+    }
+    
  
     
     
 dispatch(toggleFavorite(recipe._id));
+
 
   };
   return (

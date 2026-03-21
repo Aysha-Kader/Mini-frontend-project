@@ -4,7 +4,7 @@ import { HiMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../data/authSlice";
-import {setFavorites} from "../data/recipeSlice"
+import {setFavorites,fetchFavorites} from "../data/recipeSlice"
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -19,6 +19,12 @@ const Navbar = () => {
     setIsOpen(false);
   };
  const {isLoggedIn}=useSelector(state=> state.auth);
+
+ useEffect(()=>{
+  if(isLoggedIn){
+    dispatch(fetchFavorites());
+  }
+ },[isLoggedIn,dispatch]);
 
 const handleLogout=()=>{
  dispatch(logout());
@@ -58,6 +64,10 @@ const handleLogout=()=>{
             { name: "About", path: "/about" },
             { name: "Recipes", path: "/recipies" },
             { name: "Favorites", path: "/favorites" },
+            
+            ...(isLoggedIn?[{name:"Dashboard",path :"/dashboard"}]:[]),
+             ...(!isLoggedIn?[{name:"Sign up",path :"/register"}]:[])
+            
           ].map((item) => (
             <li
               key={item.path}
@@ -104,6 +114,9 @@ const handleLogout=()=>{
             { name: "Recipes", path: "/recipies" },
             { name: "Favorites", path: "/favorites" },
             {name:"Sign up",path:"/register"}
+             ,
+            ...(isLoggedIn?[{name:"Dashboard",path :"/dashboard"}]:[])
+            
           ].map((item) => (
             <li
               key={item.path}

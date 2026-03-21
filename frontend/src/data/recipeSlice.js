@@ -37,7 +37,7 @@ export const deleteRecipe = createAsyncThunk(
   async (id) => {
     const token = localStorage.getItem("token");
     await API.delete(`/recipes/${id}`, {
-      headers: { Authorization:` Bearer ${token} `}
+      headers: { Authorization:`Bearer ${token}`}
     });
     return id;
   }
@@ -48,8 +48,9 @@ export const fetchFavorites=createAsyncThunk("recipes/fetchFavorites",
     const token=localStorage.getItem("token");
     if(!token) return[];
     const res=await API.get("/favorites",{
-      headers: { Authorization:` Bearer ${token} `},
+      headers: { Authorization:`Bearer ${token}`},
     });
+    
       return res.data;
   }
 );
