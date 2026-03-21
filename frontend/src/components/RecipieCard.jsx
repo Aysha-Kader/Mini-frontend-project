@@ -35,7 +35,7 @@ dispatch(toggleFavorite(recipe._id));
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:scale-105 overflow-hidden">
       {/* recipie image */}
       <img
-        src={recipe.photo}
+        src={recipe.photo || recipe.image}
         alt={recipe.name}
         className="w-full h-44 object-cover"
       />

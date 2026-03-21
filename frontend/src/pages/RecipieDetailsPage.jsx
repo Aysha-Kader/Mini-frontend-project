@@ -81,7 +81,7 @@ return (
       </h1>
 
       <img
-        src={recipe.photo}
+        src={recipe.photo || recipe.image}
         alt={recipe.name}
         className="w-[800px] h-[500px] rounded-xl mb-6"
       />
