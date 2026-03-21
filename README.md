@@ -1,76 +1,119 @@
-# 🍽️ Recipe App
+🍽️ Recipe App
 
-## 🔗 Live Demo
+🔗 Live Demo
 
-[https://mini-frontend-project-e6eq.vercel.app]
----
-
-## 📖 Description
-A recipe application built using React that allows users to search recipes by name or ingredients, view details, and add their own custom recipes with filtering,favourites .  
-The app also includes AI-powered(mock) recipe summaries and a responsive user interface.
+[https://mini-frontend-project-e6eq.vercel.app/]
 
 ---
 
-## ✨ Features
-- Search recipes by name and ingredients
-- View recipe details
-- Add user recipes
-- AI-powered recipe summary
-- Responsive design for all devices
-- Favourite section
-- Filtering by diet,difficulty,cook time,cuisine.
+📖 Description
+
+A full-stack recipe application that allows users to explore, create, and manage recipes. Users can search recipes, filter based on preferences, and save their favorite dishes. The app includes authentication and persistent data storage, making it a complete real-world MERN-style project.
 
 ---
 
-## 🎯 Project Goals
-- Practice React and Redux fundamentals
--
-- Explore AI integration in frontend applications
-- Build a real-world recipe management app
+✨ Features
+
+- 🔍 Search recipes by name and ingredients
+- 📖 View detailed recipe information
+- ➕ Add, edit, and delete user recipes
+- ❤️ Add/remove favorites (persistent)
+- 🔐 User authentication (login & register)
+- 🎯 Advanced filtering (diet, difficulty, cook time, cuisine)
+- 🤖 AI-powered (mock) recipe summaries
+- 📱 Fully responsive design
 
 ---
 
-## 🛠️ Technologies Used
-- **Frontend:** React.js
-- **State Management:** Redux Toolkit
-- **Routing:** React Router DOM
-- **Styling:** CSS / Tailwind CSS
-- **Icons:** React Icons
--
-- **AI:** Hugging face(mock )
-- **Deployment:** Vercel / Render
+🎯 Project Goals
+
+- Practice React and Redux Toolkit in a real-world app
+- Implement authentication and protected routes
+- Build a full-stack application with persistent data
+
 
 ---
 
-## 📱 Responsive Design
-The application is fully responsive and works smoothly across different screen sizes.  
-A mobile-first approach was followed to ensure better usability on smaller devices.
+🛠️ Technologies Used
 
-- Mobile devices (375px and above)
-- Tablets (768px and above)
-- Desktop screens (1024px and above)
+Frontend
+
+- React.js
+- Redux Toolkit
+- React Router DOM
+- Tailwind CSS
+- React Icons
+
+Backend
+
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT Authentication
+
+Other
+
+- Deployment: Vercel (Frontend), Render (Backend)
 
 ---
 
-## 🎨 Design Choices
-- Clean and minimal user interface for better readability
-- Card-based layout for displaying recipes
-- Consistent color scheme across the application
-- Icons used to enhance visual clarity
-- Simple and intuitive navigation
+🔐 Authentication & Security
+
+- JWT-based authentication
+- Protected routes (Dashboard access only for logged-in users)
+- User-specific data (recipes & favorites)
 
 ---
 
+❤️ Favorites System
 
+- Users can like/unlike recipes
+- Favorites are stored in the database
+- Automatically loaded after login
+- Synced with Redux for instant UI updates
 
+---
 
-## 🙏 Acknowledgements
-- Hugging Face for providing pre-trained AI models
+📊 Dashboard
 
-- React and Redux community for documentation and support
-- React Icons for UI icons
+- Personalized user dashboard
+- View your recipes
+- Manage (edit/delete) your recipes
+- View your favorite recipes
 
-## 👩‍💻 Author
-**Aysha Nashra**
-Github repo:[https://github.com/Aysha-Kader/Mini-frontend-project.git]
-Email:ayshasblooms@gmail.com
+---
+
+📱 Responsive Design
+
+The application is fully responsive and works across:
+
+- 📱 Mobile (375px+)
+- 📲 Tablet (768px+)
+- 💻 Desktop (1024px+)
+
+---
+
+🎨 Design Choices
+
+- Clean and minimal UI for readability
+- Card-based layout for recipes
+- Consistent color scheme
+- Intuitive navigation
+- Icon-based interactions for better UX
+
+---
+
+🙏 Acknowledgements
+
+- Hugging Face (AI inspiration)
+- React & Redux community
+- React Icons
+
+---
+
+👩‍💻 Author
+
+Aysha Nashra
+
+🔗 GitHub: https://github.com/Aysha-Kader/Mini-frontend-project
+📧 Email: ayshasblooms@gmail.com
