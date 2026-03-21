@@ -100,14 +100,19 @@ return (
           <option>All</option>
           <option>Indian</option>
           <option>Italian</option>
-          <option>American</option>
+          <option>Chinese</option>
           <option>Turkish</option>
-          <option>Saudi Arabian</option>
+          <option>Mexican</option>
           <option>Japanese</option>
           <option>Ukrainian</option>
           <option>Croatian</option>
           <option>Spanish</option>
           <option>American</option>
+           <option>British</option>
+            <option>Norwegian</option>
+             <option>Greek</option>
+             <option>Global</option>
+              <option>Middle Eastern</option>
 
         </select>
 
