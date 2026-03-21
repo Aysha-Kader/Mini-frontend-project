@@ -25,8 +25,21 @@ const isOwner=user && recipe.user === user.id;
       navigate("/login");
       return;
     }
-    
- 
+    try{
+      if (isFav){
+        await API.delete(`/favorites/${recipe._id}`,{
+          headers:{Authorization:`Bearer ${token}`},
+        });
+      }else{
+        await API.post(`/favorites/${recipe._id}`,{},{
+          headers:{Authorization:`Bearer ${token}`},
+        });
+    }
+ dispatch(fetchFavorites());
+  }catch(err){
+    console.log(err)
+  }
+
     
     
 dispatch(toggleFavorite(recipe._id));
