@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
     enum:["user","admin"],
     default:"user",
   },
+  status:{
+    type:String,
+    enum:["pending","approved"],
+    default:"pending",
+  },
   favorites:[
     {
     type:mongoose.Schema.Types.ObjectId,
