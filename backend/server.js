@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import  cors from "cors";
 import  connectDB  from"./db/config.js";
 import authRoutes from "./routes/authRoutes.js";
-
+import adminRoutes from "./routes/adminRoutes.js";
 import recipeRoutes from "./routes/recipeRoutes.js";
 import favoriteRoutes from "./routes/favoriteRoutes.js";
 
@@ -23,7 +23,8 @@ app.use(express.json());
 app.use("/api/auth",authRoutes);
 
 app.use("/api/recipes",recipeRoutes);
-app.use("/api/favorites",favoriteRoutes)
+app.use("/api/favorites",favoriteRoutes);
+app.use("/api/admin",adminRoutes);
 
 app.get("/", (req, res) => {
   res.send("API Running...");
