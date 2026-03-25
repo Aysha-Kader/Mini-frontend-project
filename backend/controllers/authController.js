@@ -61,11 +61,7 @@ export const loginUser = async (req, res) => {
         message: "User not found"
       });
     }
-if(user.status !== "approved"){
-  return res.status(403).json({
-    message:"Wait for admin approval"
-  });
-}
+
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
 
@@ -88,7 +84,7 @@ if(user.status !== "approved"){
         id: user._id,
         email: user.email,
         name: user.name,
-        role:user.role,
+       
         
       }
     });
