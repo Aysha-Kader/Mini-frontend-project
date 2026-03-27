@@ -11,6 +11,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import EditRecipe from "./pages/EditRecipe";
 import Dashboard from "./pages/Dashboard";
+import AdminRoute from "./components/Adminroutes";
+import AdminDashboard from "./pages/AdminDashboard";
 
 export default function App() {
   return (
@@ -29,6 +31,10 @@ export default function App() {
             <Route path="/register" element={<Register/>}/>
             <Route path="/edit-recipe/:id" element={<EditRecipe/>} />
             <Route path="/dashboard" element={<Dashboard/>}/>
+            <Route path="/admin" element={<AdminRoute>  <AdminDashboard />
+            </AdminRoute>
+  } 
+ /> 
             
            </Routes>
            <Footer />

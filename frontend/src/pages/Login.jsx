@@ -16,22 +16,30 @@ const dispatch=useDispatch();
   // State to store password input value
   const [password, setPassword] = useState("");
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent page reload on submit
+  e.preventDefault(); //  stop page reload
 
-    try{
-     await dispatch(loginUser({email,password})).unwrap();
+  try {
+    //  login request
+    const res = await dispatch(
+      loginUser({ email, password })
+    ).unwrap();
+console.log(res);
+    // Check role and navigate
+    if (res.role === "admin") {
+      //  Admin → go to admin dashboard
+      navigate("/admin");
+    } else {
+      //  Normal user → fetch favorites + go dashboard
       dispatch(fetchFavorites());
-;    
-    // navigate user to home page after login
-    navigate("/dashboard");
+      navigate("/dashboard");
     }
-    catch(err){
-     
-      alert(err.message || "login failed");
-    }
-  };
+
+  } catch (err) {
+    //  Show backend error (important for approval case)
+    alert("Waiting for admin approval"|| "Login failed");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-yellow-100 to-gray-100">
