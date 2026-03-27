@@ -108,20 +108,20 @@ export const updateRecipe = async (req, res) => {
 
 //add feedback
 export const addFeedback = async (req, res) => {
-  const recipe = await Recipe.findById(req.params.id);
+  const recipe = await Recipe.findById(req.body.id);
 
   if (!recipe) {
     return res.status(404).json({ message: "Recipe not found" });
   }
 
-  if (recipe.user.toString() === req.user) {
+  if (recipe.user.toString() === req.user._id.toString()) {
     return res.status(400).json({
       message: "You cannot give feedback to your own recipe",
     });
   }
 
   const newFeedback = {
-    user: req.user,
+    user: req.user._id,
     comment: req.body.comment,
   };
 console.log("user",req.user);
