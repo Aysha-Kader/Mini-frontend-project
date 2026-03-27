@@ -114,14 +114,14 @@ export const addFeedback = async (req, res) => {
     return res.status(404).json({ message: "Recipe not found" });
   }
 
-  if (recipe.createdBy.toString() === req.user._id.toString()) {
+  if (recipe.user.toString() === req.user.toString()) {
     return res.status(400).json({
       message: "You cannot give feedback to your own recipe",
     });
   }
 
   const newFeedback = {
-    user: req.user._id,
+    user: req.user,
     comment: req.body.comment,
   };
 
@@ -149,7 +149,7 @@ export const deleteFeedback = async (req, res) => {
   }
 
   if (
-    feedback.user.toString() !== req.user._id.toString() &&
+    feedback.user.toString() !== req.user.toString() &&
     req.user.role !== "admin"
   ) {
     return res.status(403).json({
