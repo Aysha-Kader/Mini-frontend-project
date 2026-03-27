@@ -92,6 +92,7 @@ export const loginUser = async (req, res) => {
         email: user.email,
         name: user.name,
        role:user.role,
+       isApproved:user.isApproved,
         
       }
     });
