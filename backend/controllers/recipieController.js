@@ -105,3 +105,60 @@ export const updateRecipe = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+//add feedback
+export const addFeedback = async (req, res) => {
+  const recipe = await Recipe.findById(req.params.id);
+
+  if (!recipe) {
+    return res.status(404).json({ message: "Recipe not found" });
+  }
+
+  if (recipe.createdBy.toString() === req.user._id.toString()) {
+    return res.status(400).json({
+      message: "You cannot give feedback to your own recipe",
+    });
+  }
+
+  const newFeedback = {
+    user: req.user._id,
+    comment: req.body.comment,
+  };
+
+  recipe.feedbacks.push(newFeedback);
+
+  await recipe.save();
+
+  res.json({ message: "Feedback added" });
+};
+
+//de;lete feedback
+export const deleteFeedback = async (req, res) => {
+  const { recipeId, feedbackId } = req.params;
+
+  const recipe = await Recipe.findById(recipeId);
+
+  if (!recipe) {
+    return res.status(404).json({ message: "Recipe not found" });
+  }
+
+  const feedback = recipe.feedbacks.id(feedbackId);
+
+  if (!feedback) {
+    return res.status(404).json({ message: "Feedback not found" });
+  }
+
+  if (
+    feedback.user.toString() !== req.user._id.toString() &&
+    req.user.role !== "admin"
+  ) {
+    return res.status(403).json({
+      message: "Not allowed",
+    });
+  }
+
+  recipe.feedbacks.pull(feedbackId);
+  await recipe.save();
+
+  res.json({ message: "Feedback deleted" });
+};
