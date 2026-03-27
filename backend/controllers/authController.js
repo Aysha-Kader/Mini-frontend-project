@@ -30,7 +30,7 @@ export const registerUser = async (req, res) => {
     });
 
     res.status(201).json({
-      message: "User registered successfully",
+      message: "User registered successfully.Wait for admin approval",
       user
     });
 
@@ -71,6 +71,13 @@ export const loginUser = async (req, res) => {
       });
     }
 
+    
+    if (!user.isApproved) {
+      return res.status(403).json({
+        message: "Accound pending admin approval"
+      });
+    }
+
     // Create token
     const token = jwt.sign(
       { id: user._id },
@@ -84,7 +91,7 @@ export const loginUser = async (req, res) => {
         id: user._id,
         email: user.email,
         name: user.name,
-       
+       role:user.role,
         
       }
     });
