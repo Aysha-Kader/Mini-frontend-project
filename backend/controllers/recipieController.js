@@ -108,31 +108,57 @@ export const updateRecipe = async (req, res) => {
 
 //add feedback
 export const addFeedback = async (req, res) => {
-  const recipe = await Recipe.findById(req.params.id);
+  try {
+    const recipe = await Recipe.findById(req.params.id);
 
-  if (!recipe) {
-    return res.status(404).json({ message: "Recipe not found" });
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    //  Get full user using req.user (id)
+    const user = await User.findById(req.user);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    //  Check approval
+    if (!user.isApproved) {
+      return res.status(403).json({
+        message: "You are not approved to add feedback",
+      });
+    }
+
+    //  prevent own recipe feedback (optional)
+    if (recipe.user.toString() === req.user) {
+      return res.status(400).json({
+        message: "You cannot give feedback to your own recipe",
+      });
+    }
+
+    //  Validate comment
+    if (!req.body.comment) {
+      return res.status(400).json({
+        message: "Comment is required",
+      });
+    }
+
+    const newFeedback = {
+      user: req.user, // still using ID
+      comment: req.body.comment,
+    };
+
+    recipe.feedbacks.push(newFeedback);
+
+    await recipe.save();
+
+    res.json({ message: "Feedback added" });
+
+  } catch (error) {
+    console.log("ERROR:", error);
+    res.status(500).json({ message: error.message });
   }
-
-  if (recipe.user.toString() === req.user) {
-    return res.status(400).json({
-      message: "You cannot give feedback to your own recipe",
-    });
-  }
-
-  const newFeedback = {
-    user: req.user,
-    comment: req.body.comment,
-  };
-console.log("user",req.user);
-console.log("body",req.body);
-  recipe.feedbacks.push(newFeedback);
-
-  await recipe.save();
-
-  res.json({ message: "Feedback added" });
 };
-
 //de;lete feedback
 export const deleteFeedback = async (req, res) => {
   const { recipeId, feedbackId } = req.params;
