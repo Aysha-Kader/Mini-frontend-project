@@ -1,4 +1,5 @@
 import Recipe from "../models/Recipe.js";
+import User from "../models/User.js";
 
 
 // CREATE RECIPE
