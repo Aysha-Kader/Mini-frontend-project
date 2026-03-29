@@ -110,6 +110,12 @@ export const updateRecipe = async (req, res) => {
 //add feedback
 export const addFeedback = async (req, res) => {
   try {
+    console.log(recipe.user);
+                    console.log(user);
+                    console.log(localStorage.getItem("token"));
+                    console.log(req.params.id);
+                    console.log(error);
+
     const recipe = await Recipe.findById(req.params.id);
 
     if (!recipe) {
