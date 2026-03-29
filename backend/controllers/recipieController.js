@@ -159,7 +159,7 @@ export const addFeedback = async (req, res) => {
 
     await recipe.save();
 
-    res.json({ message: "Feedback added" });
+    res.json(newFeedback);
 
   } catch (error) {
     console.log("ERROR:", error);
