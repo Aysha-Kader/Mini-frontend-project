@@ -132,8 +132,8 @@ export const addFeedback = async (req, res) => {
       });
     }
 
-    //  prevent own recipe feedback (optional)
-    if (recipe.user.toString() === req.user) {
+    //  prevent own recipe feedback 
+    if (recipe.user && recipe.user.toString() === req.user) {
       return res.status(400).json({
         message: "You cannot give feedback to your own recipe",
       });
