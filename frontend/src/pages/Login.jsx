@@ -36,7 +36,7 @@ console.log(res);
     }
 
   } catch (err) {
-    //  Show backend error (important for approval case)
+    //  Show backend error 
     alert("Waiting for admin approval"|| "Login failed");
   }
 };

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchRecipeById } from "../data/recipeSlice";
+import { fetchRecipeById, addFeedback,
+  deleteFeedback } from "../data/recipeSlice";
 import { getRecipeSummary } from "../utils/aiSummary";
 import { deleteRecipe } from "../data/recipeSlice";
 import { useNavigate } from "react-router-dom";
+
 
 const RecipeDetails = () => {
  // Get recipe id 
@@ -22,9 +24,10 @@ const user=JSON.parse(localStorage.getItem("user"));
 //summary state
   const [summary, setSummary] = useState("");
 const [loading, setLoading] = useState(false);
-
+const [comment,setComment]=useState("");
   // Timer state 
   const [timer, setTimer] = useState(0);
+//feedback
 
   // for navigation 
   const navigate = useNavigate();
@@ -37,8 +40,7 @@ const [loading, setLoading] = useState(false);
   // Showing loading text until recipe data is available
   if (!recipe) return <p className="text-center">Loading...</p>;
 
-  console.log(recipe.user);
-        console.log(user);
+ 
 // access delete button only for the user who added the recipe
    const isOwner=String(recipe?.user?._id) === String(user?.id);
     
@@ -58,6 +60,33 @@ const [loading, setLoading] = useState(false);
 
 const summary=`This recipe for ${recipe.name} uses ${ingredients}.Its easy to follow. `;
 setSummary(summary);
+  }
+const handleAddFeedback = async () => {
+  
+  if (!comment.trim()) return alert("Enter feedback");
+
+  await dispatch(
+    addFeedback({
+      recipeId: recipe._id,
+      comment,
+    })
+     
+  );
+
+  setComment("");
+
+  //  Refresh recipe
+  dispatch(fetchRecipeById(id));
+};
+
+const handleDeleteFeedback = async (feedbackId) => {
+  await dispatch(
+    deleteFeedback({
+      recipeId: recipe._id,
+      feedbackId,
+    })
+  );
+
 };
 
 
@@ -163,6 +192,49 @@ return (
         
       </div>
     </div>
+
+    <div className="mt-6">
+  <h2 className="text-xl font-semibold">Feedback</h2>
+
+  {/* ADD INPUT */}
+  <div className="mt-2">
+    <input
+      type="text"
+      placeholder="Write feedback..."
+      value={comment}
+      onChange={(e) => setComment(e.target.value)}
+      className="border p-2 w-full rounded"
+    />
+
+    <button
+      onClick={handleAddFeedback} disabled={!recipe}
+      className="bg-green-500 text-white px-4 py-2 mt-2 rounded"
+    >
+      Add Feedback
+    </button>
+  </div>
+
+  {/*  LIST */}
+  {recipe.feedbacks?.map((fb) => (
+    <div
+      key={fb._id}
+      className="bg-gray-100 p-3 mt-2 rounded"
+    >
+      <p>{fb.comment}</p>
+
+      {/*  DELETE BUTTON */}
+      {(String(fb.user) === String(user?.id) ||
+        user?.role === "admin") && (
+        <button
+          onClick={() => handleDeleteFeedback(fb._id)}
+          className="text-red-500 text-sm mt-1"
+        >
+          Delete
+        </button>
+      )}
+    </div>
+  ))}
+</div>
   </div>
 );
 };

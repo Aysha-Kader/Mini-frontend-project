@@ -25,7 +25,7 @@ export const createRecipe = createAsyncThunk(
   async (recipeData) => {
     const token = localStorage.getItem("token");
     const res = await API.post("/recipes/create", recipeData, {
-      headers: { Authorization:` Bearer  ${token}` }
+      headers: { Authorization:`Bearer  ${token}` }
     });
     return res.data;
   }
@@ -68,6 +68,36 @@ export const updateRecipe = createAsyncThunk(
     return res.data;
   }
 );
+
+
+export const  addFeedback = createAsyncThunk(
+  "recipes/addFeedback",
+  async ({ recipeId, comment }, { rejectWithValue }) => {
+    try {
+      console.log(recipeId,comment);
+      const res = await API.post(`/recipes/${recipeId}/feedback`,{comment});
+        
+      return res.data;
+    } catch (error) {
+      console.log("THUNK ERROR:", error.response?.data || error.message);
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+//delete feedback
+export const deleteFeedback = createAsyncThunk(
+  "recipes/deleteFeedback",
+  async ({ recipeId, feedbackId }) => {
+    
+    await API.delete(
+      `/recipes/${recipeId}/feedback/${feedbackId}`,
+    
+    );
+
+    return { recipeId, feedbackId };
+  }
+);
+
 const recipeSlice = createSlice({
   name: "recipes",
   initialState: {
@@ -117,7 +147,22 @@ const recipeSlice = createSlice({
 })
       .addCase(fetchFavorites.fulfilled,(state,action)=>{
         state.favorites=action.payload.map(fav => fav._id);
-      });
+      })
+
+      .addCase(addFeedback.fulfilled, (state, action) => {
+ if(state.selectedRecipe){
+  state.selectedRecipe.feedbacks.push(action.payload);
+ }
+})
+
+.addCase(deleteFeedback.fulfilled, (state, action) => {
+  if (state.selectedRecipe) {
+    state.selectedRecipe.feedbacks =
+      state.selectedRecipe.feedbacks.filter(
+        (fb) => fb._id !== action.payload.feedbackId
+      );
+  }
+});
   },
 });
 
