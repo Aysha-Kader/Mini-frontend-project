@@ -94,13 +94,10 @@ export const updateRecipe = async (req, res) => {
     if (recipe.user.toString() !== req.user) {
       return res.status(401).json({ message: "Not authorized" });
     }
-const updatedData={
-  ...req.body,
-  cookTime:Number(req.body.cookTime),
-};
+
     const updated = await Recipe.findByIdAndUpdate(
       req.params.id,
-      updatedData,
+      req.body,
       { new: true }
     );
 
@@ -151,9 +148,7 @@ console.log("body:",req.body);
         message: "Comment is required",
       });
     }
-if(typeof recipe.cookTime === "string"){
-  recipe.cookTime=parseInt(recipe.cookTime) ||0 ;
-}
+
     const newFeedback = {
       user: req.user, // still using ID
       comment: req.body.comment,
