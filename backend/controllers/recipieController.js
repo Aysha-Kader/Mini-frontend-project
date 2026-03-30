@@ -151,7 +151,9 @@ console.log("body:",req.body);
         message: "Comment is required",
       });
     }
-
+if(typeof recipe.cookTime === "string"){
+  recipe.cookTime=parseInt(recipe.cookTime) ||0 ;
+}
     const newFeedback = {
       user: req.user, // still using ID
       comment: req.body.comment,
