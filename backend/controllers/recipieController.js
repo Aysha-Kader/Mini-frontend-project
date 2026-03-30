@@ -9,6 +9,7 @@ export const createRecipe = async (req, res) => {
 
     const recipe = new Recipe({
       ...req.body,
+      cookTime:Number(req.body.cookTime),
     user:req.user});
 
     await recipe.save();
