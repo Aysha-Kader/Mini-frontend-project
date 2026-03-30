@@ -94,10 +94,13 @@ export const updateRecipe = async (req, res) => {
     if (recipe.user.toString() !== req.user) {
       return res.status(401).json({ message: "Not authorized" });
     }
-
+const updatedData={
+  ...req.body,
+  cookTime:Number(req.body.cookTime),
+};
     const updated = await Recipe.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updatedData,
       { new: true }
     );
 
