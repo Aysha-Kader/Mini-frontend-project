@@ -112,7 +112,7 @@ export const updateRecipe = async (req, res) => {
 export const addFeedback = async (req, res) => {
   try {
    
-console.log("paraid":,req.params.id);
+console.log("paraid",req.params.id);
 console.log("ser",req.body);
 console.log("body:",req.body);
     const recipe = await Recipe.findById(req.params.id);
