@@ -24,7 +24,7 @@ const recipeSchema = new mongoose.Schema({
   instructions: String,
   diet: String,
   difficulty: String,
-  cookTime: Number,
+  cookTime:String,
    feedbacks: [feedbackSchema],
 },
 
