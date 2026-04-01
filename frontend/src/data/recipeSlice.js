@@ -89,7 +89,7 @@ export const  addFeedback = createAsyncThunk(
 export const deleteFeedback = createAsyncThunk(
   "recipes/deleteFeedback",
   async ({ recipeId, feedbackId }) => {
-    
+    const token=localStorage.getItem("token");
     await API.delete(
       `/recipes/${recipeId}/feedback/${feedbackId}`,{
         headers:{
