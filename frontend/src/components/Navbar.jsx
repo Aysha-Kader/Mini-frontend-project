@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation(); 
-
+const user=JSON.parse(localStorage.getItem("user"));
   const handleNavigate = (path) => {
     navigate(path);
     setIsOpen(false);
@@ -65,7 +65,7 @@ const handleLogout=()=>{
             { name: "Recipes", path: "/recipies" },
             { name: "Favorites", path: "/favorites" },
             
-            ...(isLoggedIn?[{name:"Dashboard",path :"/dashboard"}]:[]),
+            ...(isLoggedIn?[{name:"Dashboard",path :user?.role === "admin"? "/admin":"/dashboard",},]:[]),
              ...(!isLoggedIn?[{name:"Sign up",path :"/register"}]:[])
             
           ].map((item) => (
@@ -115,7 +115,7 @@ const handleLogout=()=>{
             { name: "Favorites", path: "/favorites" },
             {name:"Sign up",path:"/register"}
              ,
-            ...(isLoggedIn?[{name:"Dashboard",path :"/dashboard"}]:[])
+            ...(isLoggedIn?[{name:"Dashboard",path :user.role === "admin"?"/admin":"/dashboard",},]:[])
             
           ].map((item) => (
             <li

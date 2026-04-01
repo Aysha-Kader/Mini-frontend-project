@@ -22,7 +22,8 @@ A full-stack recipe application that allows users to explore, create, and manage
 - 🎯 Advanced filtering (diet, difficulty, cook time, cuisine)
 - 🤖 AI-powered (mock) recipe summaries
 - 📱 Fully responsive design
-
+- Add feedback
+- Admin approved login system
 ---
 
 🎯 Project Goals

@@ -75,9 +75,10 @@ export const  addFeedback = createAsyncThunk(
   async ({ recipeId, comment }, { rejectWithValue }) => {
     try {
       console.log(recipeId,comment);
+      //send feedback to backend
       const res = await API.post(`/recipes/${recipeId}/feedback`,{comment});
         
-      return res.data;
+      return res.data;//return new feedback
     } catch (error) {
       console.log("THUNK ERROR:", error.response?.data || error.message);
       return rejectWithValue(error.response?.data);
@@ -94,15 +95,15 @@ export const deleteFeedback = createAsyncThunk(
     
     );
 
-    return { recipeId, feedbackId };
+    return { recipeId, feedbackId };//return ids for state update
   }
 );
 
 const recipeSlice = createSlice({
   name: "recipes",
   initialState: {
-    recipes: [],
-    selectedRecipe: null,
+    recipes: [],//all recepie
+    selectedRecipe: null, //current
     favorites: [],
     loading: false,
   },
@@ -111,8 +112,10 @@ const recipeSlice = createSlice({
     toggleFavorite: (state, action) => {
       const id = action.payload;
       if (state.favorites.includes(id)) {
+        //remove from fav
         state.favorites = state.favorites.filter(f => f !== id);
       } else {
+        //add to fav
         state.favorites.push(id);
       }
     },
@@ -123,6 +126,7 @@ const recipeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+    //fetch all recipies
       .addCase(fetchRecipes.pending, (state) => {
         state.loading = true;
       })
@@ -130,31 +134,38 @@ const recipeSlice = createSlice({
         state.loading = false;
         state.recipes = action.payload;
       })
+      //fetch single recipe
       .addCase(fetchRecipeById.fulfilled, (state, action) => {
         state.selectedRecipe = action.payload;
       })
+      //create 
       .addCase(createRecipe.fulfilled, (state, action) => {
         state.recipes.unshift(action.payload);
       })
+      //delete recipe
       .addCase(deleteRecipe.fulfilled, (state, action) => {
         state.recipes = state.recipes.filter(r => r._id !== action.payload);
       })
+      //update
            .addCase(updateRecipe.fulfilled, (state, action) => {
             state.selectedRecipe=action.payload;
+            //update in list
   state.recipes = state.recipes.map(r =>
     r._id === action.payload._id ? action.payload : r
   );
 })
+//fetch fav
       .addCase(fetchFavorites.fulfilled,(state,action)=>{
+        //store only ids
         state.favorites=action.payload.map(fav => fav._id);
       })
-
+//add feedback
       .addCase(addFeedback.fulfilled, (state, action) => {
  if(state.selectedRecipe){
   state.selectedRecipe.feedbacks.push(action.payload);
  }
 })
-
+//delete feedback
 .addCase(deleteFeedback.fulfilled, (state, action) => {
   if (state.selectedRecipe) {
     state.selectedRecipe.feedbacks =

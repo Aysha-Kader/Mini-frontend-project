@@ -14,7 +14,7 @@ const RecipeDetails = () => {
 
   // Redux dispatch function
   const dispatch = useDispatch();
-const user=JSON.parse(localStorage.getItem("user"));
+const {user}=useSelector((state)=> state.auth);
   // Get selected recipe 
   const recipe = useSelector(
     state => state.recipes.selectedRecipe
@@ -42,7 +42,7 @@ const [comment,setComment]=useState("");
 
  
 // access delete button only for the user who added the recipe
-   const isOwner=String(recipe?.user?._id) === String(user?.id);
+   const isOwner=user && String(recipe?.user?._id) === String(user?.id);
     
   // Collecting all ingredients from recipe object
   const ingredients = recipe.ingredients || [];
@@ -193,51 +193,48 @@ return (
       </div>
     </div>
 
-    <div className="mt-6">
-  <h2 className="text-xl font-semibold">Feedback</h2>
+    {user && (
+  <div className="mt-6">
+    <h2 className="text-xl font-semibold">Feedback</h2>
 
-  {/* ADD INPUT */}
-  <div className="mt-2">
-    <input
-      type="text"
-      placeholder="Write feedback..."
-      value={comment}
-      onChange={(e) => setComment(e.target.value)}
-      className="border p-2 w-full rounded"
-    />
+    {!isOwner && (
+      <div className="mt-2">
+        <input
+          type="text"
+          placeholder="Write feedback..."
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          className="border p-2 w-full rounded"
+        />
 
-    <button
-      onClick={handleAddFeedback} disabled={!recipe}
-      className="bg-green-500 text-white px-4 py-2 mt-2 rounded"
-    >
-      Add Feedback
-    </button>
-  </div>
-
-  {/*  LIST */}
-  {recipe.feedbacks?.map((fb) => (
-    <div
-      key={fb._id}
-      className="bg-gray-100 p-3 mt-2 rounded"
-    >
-      <p>{fb.comment}</p>
-
-      {/*  DELETE BUTTON */}
-      {(String(fb.user) === String(user?.id) ||
-        user?.role === "admin") && (
         <button
-          onClick={() => handleDeleteFeedback(fb._id)}
-          className="text-red-500 text-sm mt-1"
+          onClick={handleAddFeedback}
+          className="bg-green-500 text-white px-4 py-2 mt-2 rounded"
         >
-          Delete
+          Add Feedback
         </button>
-      )}
-    </div>
-  ))}
-</div>
+      </div>
+    )}
+
+    {recipe.feedbacks?.map((fb) => (
+      <div key={fb._id} className="bg-gray-100 p-3 mt-2 rounded">
+        <p>{fb.comment}</p>
+
+        {(String(fb.user) === String(user?.id) ||
+          user?.role === "admin") && (
+          <button
+            onClick={() => handleDeleteFeedback(fb._id)}
+            className="text-white text-sm mt-1 bg-red-600 rounded"
+          >
+            Delete
+          </button>
+        )}
+      </div>
+    ))}
   </div>
+    )}
+</div>
 );
 };
-
 
 export default RecipeDetails;
