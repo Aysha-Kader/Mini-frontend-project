@@ -180,7 +180,7 @@ export const deleteFeedback = async (req, res) => {
   }
 
   if (
-    feedback.user.toString() !== req.user
+    feedback.user.toString() !== req.user && req.user.role !== "admin"
     
   ) {
     return res.status(403).json({
