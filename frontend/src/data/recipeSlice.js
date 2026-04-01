@@ -91,7 +91,11 @@ export const deleteFeedback = createAsyncThunk(
   async ({ recipeId, feedbackId }) => {
     
     await API.delete(
-      `/recipes/${recipeId}/feedback/${feedbackId}`,
+      `/recipes/${recipeId}/feedback/${feedbackId}`,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        },
+      }
     
     );
 

@@ -193,7 +193,7 @@ return (
       </div>
     </div>
 
-    {user && (
+    {user &&  (
   <div className="mt-6">
     <h2 className="text-xl font-semibold">Feedback</h2>
 
@@ -220,8 +220,7 @@ return (
       <div key={fb._id} className="bg-gray-100 p-3 mt-2 rounded">
         <p>{fb.comment}</p>
 
-        {(String(fb.user) === String(user?.id) ||
-          user?.role === "admin") && (
+        {(String(fb.user) === String(user?.id) ) && (
           <button
             onClick={() => handleDeleteFeedback(fb._id)}
             className="text-white text-sm mt-1 bg-red-600 rounded"
